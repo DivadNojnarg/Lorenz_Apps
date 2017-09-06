@@ -1,0 +1,11 @@
+name: App-1
+title: App-1
+account: dgranjon
+server: shinyapps.io
+appId: 150539
+bundleId: 750058
+url: https://dgranjon.shinyapps.io/App-1/
+when: 1489677898.24718
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|Lorenz-test.R

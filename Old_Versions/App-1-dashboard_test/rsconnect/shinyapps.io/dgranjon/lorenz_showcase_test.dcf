@@ -1,0 +1,11 @@
+name: lorenz_showcase_test
+title: Lorenz_showcase_test
+account: dgranjon
+server: shinyapps.io
+appId: 182862
+bundleId: 837274
+url: https://dgranjon.shinyapps.io/lorenz_showcase_test/
+when: 1495525480.16196
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|counter.Rdata|Lorenz-test-parallel.R|Lorenz_cpp.R

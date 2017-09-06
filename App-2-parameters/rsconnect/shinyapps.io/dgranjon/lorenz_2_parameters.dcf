@@ -1,0 +1,11 @@
+name: lorenz_2_parameters
+title: Lorenz_2_parameters
+account: dgranjon
+server: shinyapps.io
+appId: 184578
+bundleId: 856890
+url: https://dgranjon.shinyapps.io/lorenz_2_parameters/
+when: 1496850024.10055
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Lorenz-test.R

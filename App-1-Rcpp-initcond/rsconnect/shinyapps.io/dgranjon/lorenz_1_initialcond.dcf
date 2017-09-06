@@ -1,0 +1,10 @@
+name: lorenz_1_initialcond
+title: Lorenz_1_initialcond
+account: dgranjon
+server: shinyapps.io
+appId: 184142
+bundleId: 856884
+url: https://dgranjon.shinyapps.io/lorenz_1_initialcond/
+when: 1496849894.56953
+asMultiple: FALSE
+asStatic: FALSE
