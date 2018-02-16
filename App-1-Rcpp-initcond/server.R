@@ -17,7 +17,7 @@ shinyServer(function(input, output, session) {
   # Generate the select input list of initial conditions
   output$selectinput1 <- renderUI({
     selectInput("initcondselected", "Choose initial condition (Pairs plot):", 
-                choices = seq(1:input$n), width = "100%")
+                choices = c(0, seq(1:input$n)), selected = "0", width = "100%")
   })
   
   # generate some warning regarding parameters
@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
       # using parallel here
       rbind, mclapply(seq_along(list_out), 
                     function(x) data.frame(list_out[[x]], x, stringsAsFactors = FALSE)))
-    data_out[,5] <- as.numeric(data_out[,5])
+    data_out[, 5] <- as.numeric(data_out[, 5])
     return(data_out) # each sublist of list_out are bound by lines 
   })
   
@@ -92,11 +92,19 @@ shinyServer(function(input, output, session) {
   #
   #-------------------------------------------------------------------------
   
+  # pairs plot
   output$plot1 <- renderPlot({
+    req(input$initcondselected)
+    validate(
+      need(input$initcondselected >= 1, 
+           "select a initial condition to target, in the right sidebar")
+    )
     out <- out()
     # pair plot of the first initial condition (time consuming ...)
     p1 <- plot(out[out$x == input$initcondselected,-5], upper.panel = NULL) 
   })
+  
+  # space plot
   output$plot2 <- renderPlotly({
     out <- out()
     # use split to filter when x=1, x=2, x=10 ...

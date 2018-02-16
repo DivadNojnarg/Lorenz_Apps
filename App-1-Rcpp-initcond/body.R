@@ -12,14 +12,14 @@ body <- dashboardBody(
           title = tagList(shiny::icon("area-chart"), "Graph 3D"), width = 6, 
           collapsible = T, solidHeader = TRUE, 
           withSpinner(plotlyOutput("plot2", width = "auto", height = "500px"), 
-                      size = 2, type = 6, color = "#000000")
+                      size = 2, type = 8, color = "#000000")
         ),
         box(
           title = tagList(shiny::icon("line-chart"), "Pairs Plot"), width = 6, 
           collapsible = T, solidHeader = TRUE,
           
           withSpinner(plotOutput("plot1", height = "500px"), 
-                      size = 2, type = 6, color = "#000000")
+                      size = 2, type = 8, color = "#000000")
         )
       )
     ),

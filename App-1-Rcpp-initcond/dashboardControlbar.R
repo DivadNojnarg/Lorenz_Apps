@@ -29,7 +29,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
 
       <script src="assets/spinner.js"></script>
       <div class="shiny-spinner-output-container">
-        <div class="load-container load6">
+        <div class="load-container load8">
           <div id="spinner-53f5326c5ab6e16e453344adee0b63a0" class="loader">Loading...</div>
         </div>
         <div style="height:400px" class="shiny-spinner-placeholder"></div>
