@@ -1,18 +1,4 @@
-library(shiny)
-library(plotly)
-library(Rcpp)
-library(odeintr)
-
-# Define the model equations with Rcpp
-
-pars = c(a = 10, b = 3, c = 28) 
-Lorenz.sys = ' dxdt[0] = a * (x[1] - x[0]); 
-               dxdt[1] = c * x[0] - x[1] - x[0] * x[2]; 
-               dxdt[2] = -b * x[2] + x[0] * x[1]; 
-             ' # Lorenz.sys C++
-cat(JacobianCpp(Lorenz.sys))
-compile_implicit("lorenz", Lorenz.sys, pars, TRUE) 
-
+# define server function
 shinyServer(function(input, output, session) {
   
   tmax <- reactive({input$tmax})
@@ -22,8 +8,7 @@ shinyServer(function(input, output, session) {
   number_state <- reactive({input$n})
   
   state <- reactive({
-    
-    state_0 <- t(replicate(number_state(), sample(Smin():Smax(),size=3), simplify="array"))
+    state_0 <- t(replicate(number_state(), sample(Smin():Smax(),size = 3), simplify = "array"))
     n_init <- seq(1,dim(state_0)[1], by = 1)
     rownames(state_0) <- paste(n_init)
     return(state_0)
@@ -32,9 +17,7 @@ shinyServer(function(input, output, session) {
   output$state <- renderPrint({state()})
   
   # integrate the Lorenz ode model with reactive inputs
-  
   out <- reactive({
-    
     list_out <- apply(state(), 1, function(x0){
       
       init <- c(x0[1],
@@ -45,7 +28,6 @@ shinyServer(function(input, output, session) {
       dt <- dt()
       
       out = as.data.frame(lorenz(init, tmax, dt))
-      
     })
     
     data_out <- do.call(rbind, lapply(names(list_out),
@@ -56,20 +38,18 @@ shinyServer(function(input, output, session) {
   })
   
   # Generate the select input list of initial conditions
-  
   output$selectinput1 <- renderUI({
-    selectInput("initcondselected", "Choose initial condition:", 
-                choices=seq(1:input$n))
+    selectInput("initcondselected", "Choose initial condition (Pairs plot):", 
+                choices = seq(1:input$n), width = "100%")
   })
   
   # Generate the plot correspondint to out
-  
   plot1 <- eventReactive(input$initcondselected,{
     out <- out()
     p1 <- plot(out[out$x == input$initcondselected,-5], upper.panel = NULL) # pair plot of the first initial condition
   })
   
-  plot2<- reactive({
+  plot2 <- reactive({
     
     out <- out()
     
@@ -80,90 +60,58 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$plot1<- renderPlot({plot1()})
-  output$plot2<- renderPlotly({plot2()})
+  output$plot1 <- renderPlot({plot1()})
+  output$plot2 <- renderPlotly({plot2()})
   
-  # Give the possibility to download the table
   
-  output$downloadData <- downloadHandler(
-    filename = function() {
-      paste("out()-", Sys.Date(), ".csv", sep="")
-    },
-    content = function(file) {
-      write.csv(out(), file)
-    })
   
-  # reset all the values of box inputs 
+  #-------------------------------------------------------------------------
+  #
+  #  Useful tasks such as save, reset, load ...
+  #
+  #-------------------------------------------------------------------------
   
-  observeEvent(input$resetAll, {
-    reset("boxinput")
-  })
   
-  # save and load a session
-  
-  observeEvent(input$save, {
-    values <<- lapply(reactiveValuesToList(input), unclass)
-  })
-  
-  observeEvent(input$load, {
-    if (exists("values")) {
-      lapply(names(values),
-             function(x) session$sendInputMessage(x, list(value = values[[x]]))
-      )
+  # change the dashboard skin
+  current_skin <- reactiveValues(color = NULL)
+  previous_skin <- reactiveValues(color = NULL)
+  observeEvent(input$skin,{
+    # the first time, previous_skin$color is set to the first
+    # skin value at opening. Same thing for current value
+    if (is.null(previous_skin$color)) {
+      previous_skin$color <- current_skin$color <- input$skin
+    } else {
+      current_skin$color <- input$skin
+      # if the old skin is the same as the current selected skin
+      # then, do nothing
+      if (previous_skin$color == current_skin$color) {
+        NULL
+      } else {
+        # otherwise, remove the old CSS class and add the new one
+        shinyjs::removeClass(selector = "body", class = paste("skin", previous_skin$color, sep = "-"))
+        shinyjs::addClass(selector = "body", class = paste("skin", current_skin$color, sep = "-"))
+        # the current skin is added to previous_skin to be ready for
+        # the next change
+        previous_skin$color <- c(previous_skin$color, current_skin$color)[-1]
+      }
     }
   })
   
-  # close the App with the button
-  
-  observeEvent(input$close, {
-    js$closeWindow()
-    stopApp()
-  })
-  
-  
-  # When the button is clicked, wrap the code in a call to `withBusyIndicatorServer()`
-  
-  observeEvent(input$save, {
-    withBusyIndicatorServer("save", {
-      Sys.sleep(1)
-    })
-  })
-  
-  observeEvent(input$load, {
-    withBusyIndicatorServer("load", {
-      Sys.sleep(1)
-    })
-  })
-  
-  # Footer info boxes
-  
-  output$sourceBox <- renderInfoBox({
-    infoBox(
-      title = "Source",
-      value = "Lorenz, Journal of the Atmospheric Sciences,20: 1963",
-      color = "blue",
-      icon = icon("tachometer")
+  # Custom footer
+  output$dynamicFooter <- renderFooter({
+    dashboardFooter(
+      mainText = h5(
+        "2017, David Granjon, Zurich.",
+        br(),
+        "Built with",
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30"),
+        "by",
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30"),
+        "and with", img(src = "love.png", height = "30")),
+      subText = HTML("<b>Version</b> 0.3")
     )
   })
   
-  output$progressBox <- renderInfoBox({
-    infoBox(
-      title = "Progress", 
-      value = tags$ol(tags$li("Save and load buttons were bugged"),
-                      tags$li("Change Theme: Yeti")),
-      color = "blue",
-      icon = icon("list")  
-    )
-  })
-  
-  output$nameBox <- renderInfoBox({
-    infoBox(
-      title = paste("D. Granjon:", Sys.time()),
-      value = "Version: 0.3",
-      color = "blue",
-      icon = icon("code")
-    )
-  })
   
   
   session$onSessionEnded(stopApp) # stop shiny app when the web-window is closed
