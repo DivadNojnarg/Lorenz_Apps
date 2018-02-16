@@ -1,12 +1,26 @@
 # define server function
 shinyServer(function(input, output, session) {
   
+  
+  #-------------------------------------------------------------------------
+  #
+  #  Useful reactive expressions ...
+  #
+  #-------------------------------------------------------------------------
+  
   tmax <- reactive({input$tmax})
   dt <- reactive({input$dt})
   Smin <- reactive({input$Smin})
   Smax <- reactive({input$Smax})
   number_state <- reactive({input$n})
   
+  # Generate the select input list of initial conditions
+  output$selectinput1 <- renderUI({
+    selectInput("initcondselected", "Choose initial condition (Pairs plot):", 
+                choices = seq(1:input$n), width = "100%")
+  })
+  
+  # generate some warning regarding parameters
   observe({
     feedbackWarning(
       inputId = "Smin",
@@ -24,8 +38,13 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  # initial conditions
   state <- reactive({
-    state_0 <- t(replicate(number_state(), sample(Smin():Smax(),size = 3), simplify = "array"))
+    state_0 <- t(
+      replicate(
+        number_state(), sample(Smin():Smax(),size = 3), simplify = "array"
+        )
+      )
     n_init <- seq(1,dim(state_0)[1], by = 1)
     rownames(state_0) <- paste(n_init)
     return(state_0)
@@ -33,54 +52,54 @@ shinyServer(function(input, output, session) {
   
   output$state <- renderPrint({state()})
   
+  #-------------------------------------------------------------------------
+  #
+  #  Integrate the system ...
+  #
+  #-------------------------------------------------------------------------
+  
   # integrate the Lorenz ode model with reactive inputs
   out <- reactive({
-    list_out <- apply(state(), 1, function(x0){
+    tmax <- tmax()
+    dt <- dt()
+    state <- state()
+    # using parallel here
+    list_out <- mclapply(1:nrow(state), function(i){
       
-      init <- c(x0[1],
-                x0[2],
-                x0[3])
-      
-      tmax <- tmax()
-      dt <- dt()
+      init <- c(state[i, 1],
+                state[i, 2],
+                state[i, 3])
       
       out = as.data.frame(lorenz(init, tmax, dt))
     })
-    
-    data_out <- do.call(rbind, lapply(names(list_out),
-                                      function(x) data.frame(list_out[[x]], x, stringsAsFactors = FALSE)))
+    data_out <- do.call(
+      # using parallel here
+      rbind, mclapply(seq_along(list_out), 
+                    function(x) data.frame(list_out[[x]], x, stringsAsFactors = FALSE)))
     data_out[,5] <- as.numeric(data_out[,5])
     return(data_out) # each sublist of list_out are bound by lines 
     
   })
   
-  # Generate the select input list of initial conditions
-  output$selectinput1 <- renderUI({
-    selectInput("initcondselected", "Choose initial condition (Pairs plot):", 
-                choices = seq(1:input$n), width = "100%")
-  })
+  #-------------------------------------------------------------------------
+  #
+  #  Plot results ...
+  #
+  #-------------------------------------------------------------------------
   
-  # Generate the plot correspondint to out
-  plot1 <- eventReactive(input$initcondselected,{
+  output$plot1 <- renderPlot({
     out <- out()
-    p1 <- plot(out[out$x == input$initcondselected,-5], upper.panel = NULL) # pair plot of the first initial condition
+    # pair plot of the first initial condition (time consuming ...)
+    p1 <- plot(out[out$x == input$initcondselected,-5], upper.panel = NULL) 
   })
-  
-  plot2 <- reactive({
-    
+  output$plot2 <- renderPlotly({
     out <- out()
-    
+    # use split to filter when x=1, x=2, x=10 ...
     p2 <- plot_ly(out, x = out[, 2], y = out[, 3],
-                  z = out[, 4], split = ~x, type = 'scatter3d', mode = 'lines', # use split to filter when x=1, x=2, x=10 ...
+                  z = out[, 4], split = ~x, type = 'scatter3d', mode = 'lines', 
                   line = list(width = 4))
     #  add_markers(p2, x = out[1, 2], y = out[1, 3], z = out[1, 4]) # initial position
-    
   })
-  
-  output$plot1 <- renderPlot({plot1()})
-  output$plot2 <- renderPlotly({plot2()})
-  
-  
   
   #-------------------------------------------------------------------------
   #
@@ -128,8 +147,6 @@ shinyServer(function(input, output, session) {
       subText = HTML("<b>Version</b> 0.3")
     )
   })
-  
-  
   
   session$onSessionEnded(stopApp) # stop shiny app when the web-window is closed
   

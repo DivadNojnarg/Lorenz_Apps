@@ -10,16 +10,16 @@ body <- dashboardBody(
       fluidRow(
         box(
           title = tagList(shiny::icon("area-chart"), "Graph 3D"), width = 6, 
-          collapsible = T, solidHeader = TRUE,
-          #style = "height: 40vh; overflow-y: auto; max-height: 400px;",
-          withSpinner(plotlyOutput("plot2", width = "auto", height = "auto"), 
+          collapsible = T, solidHeader = TRUE, 
+          withSpinner(plotlyOutput("plot2", width = "auto", height = "500px"), 
                       size = 2, type = 6, color = "#000000")
         ),
         box(
-          width = 6, 
+          title = tagList(shiny::icon("line-chart"), "Pairs Plot"), width = 6, 
           collapsible = T, solidHeader = TRUE,
-          title = tagList(shiny::icon("line-chart"), "Pairs Plot"),
-          withSpinner(plotOutput("plot1"), size = 2, type = 6, color = "#000000")
+          
+          withSpinner(plotOutput("plot1", height = "500px"), 
+                      size = 2, type = 6, color = "#000000")
         )
       )
     ),

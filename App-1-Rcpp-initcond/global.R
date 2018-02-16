@@ -6,6 +6,7 @@ library(ygdashboard)
 library(shinyjs)
 library(shinycssloaders)
 library(shinyFeedback)
+library(parallel)
 
 # Load the template components
 source("header.R")
