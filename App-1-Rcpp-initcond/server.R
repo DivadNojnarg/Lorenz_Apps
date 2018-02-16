@@ -162,7 +162,7 @@ shinyServer(function(input, output, session) {
         "by",
         img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30"),
         "and with", img(src = "love.png", height = "30")),
-      subText = HTML("<b>Version</b> 0.3")
+      subText = HTML("<b>Version</b> 0.5")
     )
   })
   
