@@ -138,6 +138,19 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  #reset sliders individually
+  rv <- reactiveValues(lastBtn = character())
+  reset <- c("reset_tmax", "reset_n", "reset_dt", "reset_Smin", "reset_Smax")
+  lapply(seq_along(reset), FUN = function(i) {
+    observeEvent(input[[reset[[i]]]], {
+      if (input[[reset[[i]]]] > 0) {
+        rv$lastBtn <- paste(reset[[i]])
+        slider_name <- unlist(str_split(rv$lastBtn, "reset_"))[[2]]
+        shinyjs::reset(slider_name)
+      }
+    }, ignoreInit = TRUE)
+  })
+  
   # Custom footer
   output$dynamicFooter <- renderFooter({
     dashboardFooter(

@@ -9,6 +9,8 @@ library(shinyFeedback)
 library(parallel)
 library(RxODE)
 library(shinyWidgets)
+library(bsplus)
+library(stringr)
 
 # Load the template components
 source("header.R")
@@ -36,3 +38,17 @@ mod1 <- RxODE(model = lorenz_RxODE, modName = "lorenz_RxODE",
               wd = getwd(), do.compile = TRUE)
 theta <- c(k1 = 10, k2 = 28, k3 = -8/3)
 ev1 <- eventTable()
+
+# Function that extracts all reset inputs.
+# Takes input as argument and returns
+# a vector of reset buttons
+extract_reset_inputs <- function(input) {
+  inputs <- names(reactiveValuesToList(input))
+  inputs <- unlist(inputs)
+  reset_inputs <- lapply(seq_along(inputs), FUN = function(i) {
+    if (str_detect(inputs[[i]], "^reset_\\w+") == TRUE)  inputs[[i]]
+  })
+  # remove NULL elements
+  reset_inputs <- unlist(reset_inputs[!unlist(lapply(reset_inputs, is.null))])
+  return(reset_inputs)
+}
