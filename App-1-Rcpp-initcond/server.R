@@ -174,6 +174,8 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  session$onSessionEnded(stopApp) # stop shiny app when the web-window is closed
+  # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
+  # Only works with shiny server > 1.4.7
+  session$allowReconnect(TRUE)
   
 })
