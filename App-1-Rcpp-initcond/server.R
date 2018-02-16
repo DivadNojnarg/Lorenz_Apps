@@ -70,7 +70,13 @@ shinyServer(function(input, output, session) {
                 state[i, 2],
                 state[i, 3])
       
-      out = as.data.frame(lorenz(init, tmax, dt))
+      if (input$model_library == "odeintr") {
+        out <- as.data.frame(lorenz(init, tmax, dt))
+      } else {
+        ev1$add.sampling(seq(0, tmax, by = dt))
+        out <- mod1$solve(theta, events = ev1, inits = init, stiff = TRUE)
+      }
+      
     })
     data_out <- do.call(
       # using parallel here
@@ -78,7 +84,6 @@ shinyServer(function(input, output, session) {
                     function(x) data.frame(list_out[[x]], x, stringsAsFactors = FALSE)))
     data_out[,5] <- as.numeric(data_out[,5])
     return(data_out) # each sublist of list_out are bound by lines 
-    
   })
   
   #-------------------------------------------------------------------------

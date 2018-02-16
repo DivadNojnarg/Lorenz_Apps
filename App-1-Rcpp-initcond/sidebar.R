@@ -8,6 +8,17 @@ sidebar <- dashboardSidebar(
     menuItem("Info", tabName = "info", icon = icon("info")),
     menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE),
     menuItem("Solver Settings", tabName = "solve_settings", icon = icon("cogs"),
+             
+             prettyRadioButtons(inputId = "model_library",
+                                label = "Choose an ODE solver",
+                                choices = c("odeintr", "RxODE"),
+                                animation = "pulse",
+                                selected = "odeintr",
+                                thick = TRUE,
+                                inline = FALSE,
+                                bigger = TRUE),
+             
+             hr(),
         
              sliderInput("tmax",
                          "Maximum time of integration:",

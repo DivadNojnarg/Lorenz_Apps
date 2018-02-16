@@ -1,0 +1,2 @@
+PKG_CPPFLAGS=-I/Library/Frameworks/R.framework/Versions/3.3/Resources/library/RxODE/include
+PKG_LIBS=-L/Library/Frameworks/R.framework/Versions/3.3/Resources/library/RxODE/libs/ -lodeaux $(BLAS_LIBS) $(LAPACK_LIBS) $(FLIBS)
