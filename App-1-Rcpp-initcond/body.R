@@ -1,6 +1,7 @@
 body <- dashboardBody(
   useShinyjs(),
   withMathJax(),
+  useShinyFeedback(),
   
   tabItems(
     tabItem(

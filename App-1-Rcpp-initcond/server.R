@@ -7,6 +7,23 @@ shinyServer(function(input, output, session) {
   Smax <- reactive({input$Smax})
   number_state <- reactive({input$n})
   
+  observe({
+    feedbackWarning(
+      inputId = "Smin",
+      condition = !is.null(input$Smin),
+      text = "Min sampling should be < to Max sampling."
+    )
+    feedbackDanger(
+      inputId = "n",
+      condition = !is.null(input$n),
+      text = "Don't push it too hard if your computer is limited!"
+    )
+    if (input$Smin >= input$Smax) {
+      shinyjs::reset("Smin")
+      shinyjs::reset("Smax")
+    }
+  })
+  
   state <- reactive({
     state_0 <- t(replicate(number_state(), sample(Smin():Smax(),size = 3), simplify = "array"))
     n_init <- seq(1,dim(state_0)[1], by = 1)

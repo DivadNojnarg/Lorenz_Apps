@@ -1,14 +1,11 @@
 # load packages
 library(shiny)
 library(plotly)
-library(Rcpp)
 library(odeintr)
 library(ygdashboard)
-library(shinythemes)
-library(shinyBS)
 library(shinyjs)
 library(shinycssloaders)
-library(flexdashboard)
+library(shinyFeedback)
 
 # Load the template components
 source("header.R")
