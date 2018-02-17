@@ -2,6 +2,7 @@
 library(shiny)
 library(plotly)
 library(deSolve)
+library(RxODE)
 library(ygdashboard)
 library(bsplus)
 library(shinyjs)
@@ -25,3 +26,13 @@ Lorenz <- function(t, state, parameters) {
     list(c(dX, dY, dZ))
   })
 }
+
+# compilation if needed with RxODE
+lorenz_RxODE <- "
+   d/dt(X) = a * (Y - X);
+   d/dt(Y) = X * (c - Z) - Y;
+   d/dt(Z) = X * Y - b * Z;
+"
+mod1 <- RxODE(model = lorenz_RxODE, modName = "lorenz_RxODE", 
+              wd = getwd(), do.compile = TRUE)
+ev1 <- eventTable()

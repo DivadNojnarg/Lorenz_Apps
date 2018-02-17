@@ -65,8 +65,8 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="form-group shiny-input-container">
       <label class="control-label" for="yvar">Y axis variable:</label>
       <div>
-      <select id="yvar"><option value="X" selected>X</option>
-      <option value="Y">Y</option>
+      <select id="yvar"><option value="Y" selected>Y</option>
+      <option value="X">X</option>
       <option value="Z">Z</option></select>
       <script type="application/json" data-for="yvar" data-nonempty="">{}</script>
       </div>
@@ -83,6 +83,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <h3 class="control-sidebar-heading">Other Options</h3>
       
       <!-- Select input -->
+      <div data-step="7" data-intro="Here you can change the global &lt;b&gt;theme&lt;/b&gt; &#10;of the dashboard" data-position="left">
       <div data-step="7" data-intro="Here you can change the global &lt;b&gt;theme&lt;/b&gt; &#10;of the dashboard" data-position="left">
       <div class="form-group shiny-input-container">
       <label class="control-label" for="skin">Select a skin:</label>

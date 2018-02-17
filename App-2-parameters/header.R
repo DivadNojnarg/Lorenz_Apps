@@ -1,5 +1,10 @@
 header <- dashboardHeader(
-  title="Lorenz Parameters",
+  title = HTML(paste0(
+    '<span class = "logo-lg">Lorenz Parameters</span>',
+    '<img src= "lorenz_attractor.svg">'
+  )),
+  
+  titleWidth = 300,
   tags$li(
     title = "",
     class = "dropdown",

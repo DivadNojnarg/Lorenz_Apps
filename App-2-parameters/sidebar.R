@@ -24,11 +24,22 @@ sidebar <- dashboardSidebar(
              sliderInput("atol", label = "Absolute tolerance", 
                          min = 1e-10, max = 1e-02, value = 1e-06)
     ),
+    menuItem("Speed up", tabName = "speedup", icon = icon("calculator"),
+             
+             prettyRadioButtons(inputId = "compile",
+                                label = "Choose an ODE solver",
+                                choices = c("deSolve", "RxODE"),
+                                animation = "pulse",
+                                selected = "deSolve",
+                                thick = TRUE,
+                                inline = FALSE,
+                                bigger = TRUE)
+    ),
     menuItem("Initial conditions", tabName = "init_settings", icon = icon("flask"),
              
-             numericInput("X0","Initial value of X0:", 1, min = 0, max = 100),
-             numericInput("Y0","Initial value of Y0:", 1, min = 0, max = 100),
-             numericInput("Z0","Initial value of Z0:", 1, min = 0, max = 100)
+             numericInput("X0","Initial value of X:", 1, min = 0, max = 100),
+             numericInput("Y0","Initial value of Y:", 1, min = 0, max = 100),
+             numericInput("Z0","Initial value of Z:", 1, min = 0, max = 100)
     )
   )
 )
