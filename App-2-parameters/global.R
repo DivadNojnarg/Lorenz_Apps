@@ -9,6 +9,7 @@ library(shinyjs)
 library(shinycssloaders)
 library(shinyWidgets)
 library(shinyFeedback)
+library(stringr)
 
 # Load the template components
 source("header.R")

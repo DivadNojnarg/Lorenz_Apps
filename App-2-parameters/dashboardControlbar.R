@@ -12,6 +12,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
     
     HTML(paste0(
       '<!-- Control Sidebar -->
+      <div id="sidebar_bis">
       <aside class="control-sidebar control-sidebar-dark">
       <!-- Create the tabs -->
       <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -25,21 +26,45 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <!-- Home tab content -->
       <div class="tab-pane active" id="control-sidebar-home-tab">
       <h3 class="control-sidebar-heading">Sliders</h3>
-      
+
       <div class="form-group shiny-input-container">
-        <label class="control-label" for="a">Value of a:</label>
+      <label class="control-label" for="a" style="width:100%;">
+      Value of a:
+      <div class="pull-right">
+      <button class="action-button bttn-unite bttn-xs bttn-danger bttn-no-outline" id="reset_a" type="button">
+      <i class="fa fa-undo"></i>
+      </button>
+      </div>
+      </label>
       <input class="js-range-slider" id="a" data-min="0" data-max="20" data-from="10" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="5" data-data-type="number"/>
       </div>
-      
+
+
       <div class="form-group shiny-input-container">
-      <label class="control-label" for="b">Value of b:</label>
+      <label class="control-label" for="b" style="width:100%;">
+      Value of b:
+      <div class="pull-right">
+      <button class="action-button bttn-unite bttn-xs bttn-danger bttn-no-outline" id="reset_b" type="button">
+      <i class="fa fa-undo"></i>
+      </button>
+      </div>
+      </label>
       <input class="js-range-slider" id="b" data-min="0" data-max="10" data-from="3" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="10" data-data-type="number"/>
       </div>
-      
+
+
       <div class="form-group shiny-input-container">
-      <label class="control-label" for="c">Value of c:</label>
+      <label class="control-label" for="c" style="width:100%;">
+      Value of c:
+      <div class="pull-right">
+      <button class="action-button bttn-unite bttn-xs bttn-danger bttn-no-outline" id="reset_c" type="button">
+      <i class="fa fa-undo"></i>
+      </button>
+      </div>
+      </label>
       <input class="js-range-slider" id="c" data-min="0" data-max="100" data-from="28" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
       </div>
+      
       
       <!-- /.control-sidebar-menu -->
       </div>
@@ -110,6 +135,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <!-- Add the sidebar"s background. This div must be placed
       immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
+      </div>
       '))
     
   } else {

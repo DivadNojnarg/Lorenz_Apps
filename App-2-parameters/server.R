@@ -22,10 +22,12 @@ shinyServer(function(input, output, session) {
   output$hopf <- renderInfoBox({
     
     if (input$c < input$a*(input$a + input$b + 3)/(input$a - input$b - 1)) {
-      r1 <- paste(input$c,"<", input$a*(input$a + input$b + 3)/(input$a - input$b - 1), 
+      r1 <- paste(input$c,"<", round(input$a*(input$a + input$b + 3) / 
+                                       (input$a - input$b - 1)), 
                   ": no Hopf-bifurcation expected")
     } else {
-      r1 <- paste(input$c,">", input$a*(input$a + input$b + 3)/(input$a - input$b - 1), 
+      r1 <- paste(input$c,">", round(input$a*(input$a + input$b + 3) / 
+                                       (input$a - input$b - 1)), 
                      ": Hopf-bifurcation expected")
       }
     infoBox(
@@ -59,10 +61,17 @@ shinyServer(function(input, output, session) {
     state <- state()
     times <- times()
   
-    as.data.frame(ode(y = state, times = times, 
-                      func = Lorenz, parms = parameters,
-                      method = input$solver, rtol = input$rtol, atol = input$atol))
-    
+    if (input$compile == "deSolve") {
+      as.data.frame(
+        ode(y = state, times = times, func = Lorenz, parms = parameters, 
+            method = input$solver, rtol = input$rtol, atol = input$atol)
+      )
+    } else {
+      ev1$add.sampling(times)
+      as.data.frame(
+        mod1$solve(params = parameters, events = ev1, inits = state, stiff = TRUE)
+      )
+    }
   })
   
   
@@ -87,7 +96,8 @@ shinyServer(function(input, output, session) {
     Y <- out[,"Y"]
     Z <- out[,"Z"]
     
-    p1 <- plot_ly(out, x = ~time, y = ~X, name = 'X', type = 'scatter', mode = 'lines') %>%
+    p1 <- plot_ly(out, x = ~time, y = ~X, name = 'X', 
+                  type = 'scatter', mode = 'lines') %>%
       add_lines(y = ~Y, name = 'Y') %>%
       add_lines(y = ~Z, name = 'Z')
     
@@ -102,13 +112,16 @@ shinyServer(function(input, output, session) {
       times <- times()
       out <- out()
       
-      p2 <- plot_ly(out, x = out[, "X"], y = out[, "Y"], z = out[, "Z"], type = 'scatter3d', mode = 'lines',
-                    line = list(width = 4)) %>%
-        add_markers(x = out[1, "X"], y = out[1, "Y"], z = out[1, "Z"], name = '(X0,YO,Z0)') %>% # initial position
+      p2 <- plot_ly(out, x = out[, "X"], y = out[, "Y"], z = out[, "Z"], 
+                    type = 'scatter3d', mode = 'lines', line = list(width = 4)) %>%
+        add_markers(x = out[1, "X"], y = out[1, "Y"], 
+                    z = out[1, "Z"], name = '(X0,YO,Z0)') %>% # initial position
         add_markers(x = sqrt(input$b*(input$c - 1)), y = sqrt(input$b*(input$c - 1)), 
-                    z = input$c - 1, marker = list(color = "#000000"), name = "Non trivial Eq1") %>% # other steady state
+                    z = input$c - 1, marker = list(color = "#000000"), 
+                    name = "Non trivial Eq1") %>% # other steady state
         add_markers(x = -sqrt(input$b*(input$c - 1)), y = -sqrt(input$b*(input$c - 1)), 
-                    z = input$c - 1, marker = list(color = "#000000"), name = "Non trivial Eq2") # other steady state
+                    z = input$c - 1, marker = list(color = "#000000"), 
+                    name = "Non trivial Eq2") # other steady state
       
   }) 
   
@@ -129,9 +142,10 @@ shinyServer(function(input, output, session) {
       title = input$yvar[[1]]
     )
     
-    p3 <- plot_ly(out, x = ~out[,input$xvar], y = ~out[,input$yvar], type = 'scatter', mode = 'lines') %>%
+    p3 <- plot_ly(out, x = ~out[,input$xvar], y = ~out[,input$yvar], 
+                  type = 'scatter', mode = 'lines') %>%
       layout(xaxis = xvar , yaxis = yvar)
-           
+    
   })
   
   
@@ -144,7 +158,7 @@ shinyServer(function(input, output, session) {
   # Give the possibility to download the table
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste("out()-", Sys.Date(), ".csv", sep="")
+      paste0("out()-", Sys.Date(), ".csv")
     },
     content = function(file) {
       write.csv(out(), file)
@@ -152,7 +166,8 @@ shinyServer(function(input, output, session) {
   
   # reset all the values of box inputs
   observeEvent(input$resetAll, {
-    reset("boxinput")
+    shinyjs::reset("sidebar_main")
+    shinyjs::reset("sidebar_bis")
   })
   
   # save and load a session
@@ -208,7 +223,7 @@ shinyServer(function(input, output, session) {
   
   #reset sliders individually
   rv <- reactiveValues(lastBtn = character())
-  reset <- c("reset_tmax", "reset_n", "reset_dt", "reset_Smin", "reset_Smax")
+  reset <- c("reset_a", "reset_b", "reset_c", "reset_atol", "reset_rtol")
   lapply(seq_along(reset), FUN = function(i) {
     observeEvent(input[[reset[[i]]]], {
       if (input[[reset[[i]]]] > 0) {

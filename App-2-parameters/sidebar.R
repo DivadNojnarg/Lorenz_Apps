@@ -7,6 +7,7 @@ sidebar <- dashboardSidebar(
     
     menuItem("Info", tabName = "info", icon = icon("info")),
     menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE),
+    menuItem("Analysis", tabName = "analysis", icon = icon("superscript")),
     menuItem("Datas", tabName = "datas", icon = icon("table")),
     menuItem("Solver Settings", tabName = "solve_settings", icon = icon("cogs"),
              
@@ -20,9 +21,23 @@ sidebar <- dashboardSidebar(
                                      "bdf_d", "adams", "impAdams", 
                                      "impAdams_d")),
              sliderInput("rtol", label = "Relative tolerance", 
-                         min = 1e-10, max = 1e-02, value = 1e-06),
+                         min = 1e-10, max = 1e-02, value = 1e-06) %>%
+               shinyInput_label_embed(
+                 icon("undo") %>%
+                   actionBttn(inputId = "reset_rtol",
+                              label = "", 
+                              color = "danger", 
+                              size = "xs")
+               ),
              sliderInput("atol", label = "Absolute tolerance", 
-                         min = 1e-10, max = 1e-02, value = 1e-06)
+                         min = 1e-10, max = 1e-02, value = 1e-06) %>%
+               shinyInput_label_embed(
+                 icon("undo") %>%
+                   actionBttn(inputId = "reset_atol",
+                              label = "", 
+                              color = "danger", 
+                              size = "xs")
+               )
     ),
     menuItem("Speed up", tabName = "speedup", icon = icon("calculator"),
              
