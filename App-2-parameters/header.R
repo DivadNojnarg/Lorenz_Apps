@@ -9,11 +9,11 @@ header <- dashboardHeader(
     title = "",
     class = "dropdown",
     #actionButton(inputId="go", label="Update"),
-    actionButton(class = "fa fa-floppy-o fa-5x", inputId = "save",
-                 label = " Save", class = "btn btn-primary"),
-    actionButton(class = "fa fa-refresh fa-5x", inputId = "load",
-                 label = " Load", class = "btn btn-primary"),
-    actionButton(class = "fa fa-trash fa-5x", inputId = "resetAll",
-                 label = " Reset", class = "btn btn-danger")
+    actionBttn(icon = icon("floppy"), inputId = "save", 
+               label = " Save", color = "primary", style = "fill"),
+    actionBttn(icon = icon("refresh"), inputId = "load", 
+               label = " Load", color = "primary", style = "fill"),
+    actionBttn(icon = icon("trash"), inputId = "resetAll", 
+               label = " Reset", color = "danger", style = "fill")
   )
 )
