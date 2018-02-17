@@ -7,6 +7,7 @@ library(bsplus)
 library(shinyjs)
 library(shinycssloaders)
 library(shinyWidgets)
+library(shinyFeedback)
 
 # Load the template components
 source("header.R")
