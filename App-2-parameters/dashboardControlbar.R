@@ -77,25 +77,71 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="tab-pane" id="control-sidebar-parms-tab">
       <h3 class="control-sidebar-heading">Phase Plan options</h3> 
       
-      <div class="form-group shiny-input-container">
-        <label class="control-label" for="xvar">X axis variable:</label>
-      <div>
-      <select id="xvar"><option value="X" selected>X</option>
-      <option value="Y">Y</option>
-      <option value="Z">Z</option></select>
-      <script type="application/json" data-for="xvar" data-nonempty="">{}</script>
+      <div id="xvar" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline">
+      <label class="control-label" for="xvar">X axis variable</label>
+      <div class="shiny-options-group">
+      <div class="pretty p-default p-bigger p-thick p-pulse">
+      <input type="radio" name="xvar" value="X" checked="checked"/>
+      <div class="state p-primary">
+      <label>
+      <span>X</span>
+      </label>
+      </div>
+      </div>
+      <div class="pretty p-default p-bigger p-thick p-pulse">
+      <input type="radio" name="xvar" value="Y"/>
+      <div class="state p-primary">
+      <label>
+      <span>Y</span>
+      </label>
+      </div>
+      </div>
+      <div class="pretty p-default p-bigger p-thick p-pulse">
+      <input type="radio" name="xvar" value="Z"/>
+      <div class="state p-primary">
+      <label>
+      <span>Z</span>
+      </label>
+      </div>
+      </div>
       </div>
       </div>
       
-      <div class="form-group shiny-input-container">
-      <label class="control-label" for="yvar">Y axis variable:</label>
-      <div>
-      <select id="yvar"><option value="Y" selected>Y</option>
-      <option value="X">X</option>
-      <option value="Z">Z</option></select>
-      <script type="application/json" data-for="yvar" data-nonempty="">{}</script>
+      
+
+      <div id="yvar" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline">
+  <label class="control-label" for="yvar">Y axis variable</label>
+  <div class="shiny-options-group">
+    <div class="pretty p-default p-bigger p-thick p-pulse">
+      <input type="radio" name="yvar" value="X"/>
+      <div class="state p-primary">
+        <label>
+          <span>X</span>
+        </label>
       </div>
+    </div>
+    <div class="pretty p-default p-bigger p-thick p-pulse">
+      <input type="radio" name="yvar" value="Y" checked="checked"/>
+      <div class="state p-primary">
+        <label>
+          <span>Y</span>
+        </label>
       </div>
+    </div>
+    <div class="pretty p-default p-bigger p-thick p-pulse">
+      <input type="radio" name="yvar" value="Z"/>
+      <div class="state p-primary">
+        <label>
+          <span>Z</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
       </div>
       <!-- /.Phase Plane options -->
       
