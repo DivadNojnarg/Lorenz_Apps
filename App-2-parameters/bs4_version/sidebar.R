@@ -1,0 +1,19 @@
+sidebar <- bs4DashSidebar(
+  skin = "light",
+  status = "primary",
+  title = HTML("<small>Lorenz Parameters</small>"),
+  brandColor = "primary",
+  url = "",
+  src = "lorenz_attractor.svg",
+  elevation = 3,
+  opacity = 0.8,
+  
+  # content
+  bs4SidebarMenu(
+    bs4SidebarMenuItem("App", tabName = "main", icon = "home"),
+    bs4SidebarMenuItem("Datas", tabName = "datas", icon = "table"),
+    bs4SidebarMenuItem("Analysis", tabName = "analysis", icon = "superscript"),
+    bs4SidebarMenuItem("Info", tabName = "info", icon = "info")
+  )
+)
+

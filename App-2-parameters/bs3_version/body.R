@@ -8,12 +8,20 @@ body <- dashboardBody(
       tabName = "datas",
       fluidRow(
         box(
-          title = tagList(shiny::icon("table"), "Table"), width = 12,
-          collapsible = T, solidHeader = TRUE, 
-          downloadButton(outputId = "downloadData", 
-                         label = " Download Table"),
-          withSpinner(dataTableOutput("table"), 
-                      size = 2, type = 8, color = "#000000")
+          title = tagList(shiny::icon("table"), "Table"), 
+          width = 12,
+          collapsible = T, 
+          solidHeader = TRUE, 
+          downloadButton(
+            outputId = "downloadData", 
+            label = " Download Table"
+          ),
+          withSpinner(
+            dataTableOutput("table"), 
+            size = 2, 
+            type = 8, 
+            color = "#000000"
+          )
         )
       )
     ),
@@ -22,38 +30,56 @@ body <- dashboardBody(
       
       fluidRow(
         box(
-          title = tagList(shiny::icon("area-chart"), "Graph 3D"), width = 6, 
-          collapsible = T, solidHeader = TRUE, 
-          withSpinner(plotlyOutput("plot2", height = 400), 
-                      size = 2, type = 8, color = "#000000")
+          title = tagList(shiny::icon("area-chart"), "Graph 3D"), 
+          width = 6, 
+          collapsible = T, 
+          solidHeader = TRUE, 
+          withSpinner(
+            plotlyOutput("plot2", height = 400), 
+            size = 2, 
+            type = 8, 
+            color = "#000000"
+          )
         ),
         box(
-          title = tagList(shiny::icon("area-chart"), "Phase Plane"), width = 6, 
-          collapsible = T, solidHeader = TRUE,
-          withSpinner(plotlyOutput("plot3", height = 400), 
-                      size = 2, type = 8, color = "#000000")
+          title = tagList(shiny::icon("area-chart"), "Phase Plane"),
+          width = 6, 
+          collapsible = T, 
+          solidHeader = TRUE,
+          withSpinner(
+            plotlyOutput("plot3", height = 400), 
+            size = 2, type = 8, color = "#000000"
+          )
         )
       ),
       fluidRow(
         box(
-          title = tagList(shiny::icon("line-chart"), "Time Series"), width = 6, 
-          collapsible = T, solidHeader = TRUE,
-          withSpinner(plotlyOutput("plot1", height = 400), 
-                      size = 2, type = 8, color = "#000000")
+          title = tagList(shiny::icon("line-chart"), "Time Series"), 
+          width = 6, 
+          collapsible = T, 
+          solidHeader = TRUE,
+          withSpinner(
+            plotlyOutput("plot1", height = 400), 
+            size = 2, type = 8, color = "#000000"
+          )
         )
       )
     ),
     tabItem(
       tabName = "info",
       box(
-        title = tagList(shiny::icon("info"), "Infos"), width = 12, 
-        collapsible = T, solidHeader = TRUE,
+        title = tagList(shiny::icon("info"), "Infos"), 
+        width = 12, 
+        collapsible = T, 
+        solidHeader = TRUE,
         p("In this app you can:"),
-        tags$ol(tags$li("Change parameter values"), 
-                tags$li("Choose initial conditions"),
-                tags$li("Change solver options"),
-                tags$li("Display phase plane projections (X vs Y, X vs Z or Y vs Z)"),
-                tags$li("More features will come soon!")),
+        tags$ol(
+          tags$li("Change parameter values"), 
+          tags$li("Choose initial conditions"),
+          tags$li("Change solver options"),
+          tags$li("Display phase plane projections (X vs Y, X vs Z or Y vs Z)"),
+          tags$li("More features will come soon!")
+        ),
         
         p("These are the equations behind the Lorenz model"),
         p(withMathJax("$$\\left\\{
@@ -86,8 +112,10 @@ body <- dashboardBody(
       tabName = "analysis",
       fluidRow(
         box(
-          title = tagList(shiny::icon("superscript"), "Stability"), width = 6, 
-          collapsible = T, solidHeader = TRUE,
+          title = tagList(shiny::icon("superscript"), "Stability"), 
+          width = 6, 
+          collapsible = T, 
+          solidHeader = TRUE,
           
           p("The jacobian matrix of the system is:"),
           p("$$
@@ -118,9 +146,10 @@ body <- dashboardBody(
             \\(\\Big(0,0,0\\Big)\\) is stable if and only if \\(c \\leq 1\\).")
         ),
         box(
-          title = tagList(shiny::icon("superscript"), "Bifurcations"), width = 6, 
-          collapsible = T, solidHeader = TRUE,
-          
+          title = tagList(shiny::icon("superscript"), "Bifurcations"), 
+          width = 6, 
+          collapsible = T, 
+          solidHeader = TRUE,
           infoBoxOutput("hopf", width = 6),
           infoBoxOutput("pitchfork", width = 6),
           br(),
