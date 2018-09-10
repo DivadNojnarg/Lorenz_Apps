@@ -4,7 +4,7 @@ sidebar <- bs4DashSidebar(
   title = HTML("<small>Lorenz Parameters</small>"),
   brandColor = "primary",
   url = "",
-  src = "lorenz_attractor.svg",
+  src = "https://upload.wikimedia.org/wikipedia/commons/f/f4/Lorenz_attractor.svg",
   elevation = 3,
   opacity = 0.8,
   
