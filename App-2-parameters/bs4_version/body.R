@@ -239,8 +239,7 @@ body <- bs4DashBody(
           tags$li("Change parameter values"), 
           tags$li("Choose initial conditions"),
           tags$li("Change solver options"),
-          tags$li("Display phase plane projections (X vs Y, X vs Z or Y vs Z)"),
-          tags$li("More features will come soon!")
+          tags$li("Display phase plane projections (X vs Y, X vs Z or Y vs Z)")
         ),
         
         p("These are the equations behind the Lorenz model"),

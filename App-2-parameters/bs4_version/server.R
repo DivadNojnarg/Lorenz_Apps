@@ -20,21 +20,21 @@ shinyServer(function(input, output, session) {
   
   # Hopf bifurcation or not? 
   output$hopf <- renderbs4InfoBox({
+    no_hopf <- "input$c < input$a * (input$a + input$b + 3) / (input$a - input$b - 1)"
+    no_hopf <- eval(parse(text = no_hopf))
     
-    if (input$c < input$a*(input$a + input$b + 3)/(input$a - input$b - 1)) {
-      r1 <- paste(input$c,"<", round(input$a*(input$a + input$b + 3) / 
-                                       (input$a - input$b - 1)), 
-                  ": no Hopf-bifurcation expected")
+    res <- round(input$a * (input$a + input$b + 3) / (input$a - input$b - 1))
+    
+    if (no_hopf) {
+      r1 <- paste(input$c, "<", res, ": no Hopf-bifurcation")
     } else {
-      r1 <- paste(input$c,">", round(input$a*(input$a + input$b + 3) / 
-                                       (input$a - input$b - 1)), 
-                     ": Hopf-bifurcation expected")
-      }
+      r1 <- paste(input$c, ">", res, ": Hopf-bifurcation")
+    }
     bs4InfoBox(
       title = "Hopf Bifurcation?", 
       value = r1, 
       icon = "thumbs-up",
-      status = "primary",  
+      status = NULL,  
       iconElevation = 4
     )
     
@@ -52,29 +52,41 @@ shinyServer(function(input, output, session) {
       title = "Pitchfork Bifurcation?", 
       value = r2, 
       icon = "thumbs-up", 
-      status = "primary",
+      status = NULL,
       iconElevation = 4
     )
     
   })
   
-
+  
   # integrate the Lorenz ode model with reactive inputs, solver is selected by the user
   out <- reactive({
     
     parameters <- parameters()
     state <- state()
     times <- times()
-  
+    
     if (input$compile == "deSolve") {
       as.data.frame(
-        ode(y = state, times = times, func = Lorenz, parms = parameters, 
-            method = input$solver, rtol = input$rtol, atol = input$atol)
+        ode(
+          y = state, 
+          times = times, 
+          func = Lorenz, 
+          parms = parameters, 
+          method = input$solver, 
+          rtol = input$rtol, 
+          atol = input$atol
+        )
       )
     } else {
       ev1$add.sampling(times)
       as.data.frame(
-        mod1$solve(params = parameters, events = ev1, inits = state, stiff = TRUE)
+        mod1$solve(
+          params = parameters, 
+          events = ev1, 
+          inits = state, 
+          stiff = TRUE
+        )
       )
     }
   })
@@ -91,7 +103,7 @@ shinyServer(function(input, output, session) {
   
   # Generate the plot of each variable as a function of time
   output$plot1 <- renderPlotly({
-
+    
     parameters <- parameters()
     state <- state()
     times <- times()
@@ -117,22 +129,37 @@ shinyServer(function(input, output, session) {
   # Generate the 3D plot correspondint to out
   output$plot2 <- renderPlotly({
     
-      parameters <- parameters()
-      state <- state()
-      times <- times()
-      out <- out()
-      
-      p2 <- plot_ly(out, x = out[, "X"], y = out[, "Y"], z = out[, "Z"], 
-                    type = 'scatter3d', mode = 'lines', line = list(width = 4)) %>%
-        add_markers(x = out[1, "X"], y = out[1, "Y"], 
-                    z = out[1, "Z"], name = '(X0,YO,Z0)') %>% # initial position
-        add_markers(x = sqrt(input$b*(input$c - 1)), y = sqrt(input$b*(input$c - 1)), 
-                    z = input$c - 1, marker = list(color = "#000000"), 
-                    name = "Non trivial Eq1") %>% # other steady state
-        add_markers(x = -sqrt(input$b*(input$c - 1)), y = -sqrt(input$b*(input$c - 1)), 
-                    z = input$c - 1, marker = list(color = "#000000"), 
-                    name = "Non trivial Eq2") # other steady state
-      
+    parameters <- parameters()
+    state <- state()
+    times <- times()
+    out <- out()
+    
+    p2 <- plot_ly(
+      out, 
+      x = out[, "X"], 
+      y = out[, "Y"], 
+      z = out[, "Z"], 
+      type = 'scatter3d', 
+      mode = 'lines', 
+      line = list(width = 4)) %>%
+      add_markers(
+        x = out[1, "X"], 
+        y = out[1, "Y"], 
+        z = out[1, "Z"], 
+        name = '(X0,YO,Z0)') %>% # initial position
+      add_markers(
+        x = sqrt(input$b*(input$c - 1)), 
+        y = sqrt(input$b*(input$c - 1)), 
+        z = input$c - 1, 
+        marker = list(color = "#000000"), 
+        name = "Non trivial Eq1") %>% # other steady state
+      add_markers(
+        x = -sqrt(input$b*(input$c - 1)), 
+        y = -sqrt(input$b*(input$c - 1)), 
+        z = input$c - 1, 
+        marker = list(color = "#000000"), 
+        name = "Non trivial Eq2") # other steady state
+    
   }) 
   
   # plot phase plan projection as a function of 2 selected values by the user

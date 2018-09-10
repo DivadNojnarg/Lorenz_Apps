@@ -62,7 +62,7 @@ controlbar <- bs4DashControlbar(
     animation = "pulse",
     selected = "deSolve",
     thick = TRUE,
-    inline = FALSE,
+    inline = TRUE,
     bigger = TRUE
   ),
   

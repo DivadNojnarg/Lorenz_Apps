@@ -14,7 +14,8 @@ bs4DashPage(
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30"),
       "by",
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30"),
-      "and with", img(src = "love.png", height = "30")
+      "and with", img(src = "love.png", height = "30"),
+      "."
     ),
     right_text = HTML(
       paste(

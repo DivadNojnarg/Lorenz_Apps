@@ -1,5 +1,6 @@
 navbar <- bs4DashNavbar(
   status = "white",
+  skin = "light",
   rightUi = tagList(
     #actionButton(inputId="go", label="Update"),
     actionBttn(
