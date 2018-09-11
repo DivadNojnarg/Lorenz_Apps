@@ -37,13 +37,11 @@ shinyServer(function(input, output, session) {
       status = NULL,  
       iconElevation = 4
     )
-    
   })
   
   output$pitchfork <- renderbs4InfoBox({
     if (0 < input$c && input$c <= 1) {
-      r2 <- paste(0, "=<", input$c,"=<", 1, 
-                  ": (0,0,0) is the only one equilibrium")
+      r2 <- paste(0, "=<", input$c,"=<", 1, ": (0,0,0) is the only one equilibrium")
     } else {
       r2 <- paste(input$c,">", 1, ": 3 equilibrium, (0,0,0) is unstable")
     }
@@ -55,7 +53,6 @@ shinyServer(function(input, output, session) {
       status = NULL,
       iconElevation = 4
     )
-    
   })
   
   
@@ -172,12 +169,8 @@ shinyServer(function(input, output, session) {
     times <- times()
     out <- out()
     
-    xvar <- list(
-      title = input$xvar[[1]]
-    )
-    yvar <- list(
-      title = input$yvar[[1]]
-    )
+    xvar <- list(title = input$xvar[[1]])
+    yvar <- list(title = input$yvar[[1]])
     
     p3 <- plot_ly(
       out, 
