@@ -11,7 +11,16 @@ body <- bs4DashBody(
   bs4TabItems(
     bs4TabItem(
       tabName = "main",
-      
+      fluidRow(
+        lapply(1:3, FUN = function(i) {
+          column(
+            width = 4,
+            align = "center",
+            bs4InfoBoxOutput(paste0(paste0("info_eq", i)), width = 12)
+          )
+        })
+      ),
+      # plots
       fluidRow(
         bs4Card(
           title = tagList(shiny::icon("area-chart"), "Graph 3D"), 
@@ -176,14 +185,15 @@ body <- bs4DashBody(
     bs4TabItem(
       tabName = "analysis",
       fluidRow(
-        bs4Card(
-          title = tagList(shiny::icon("superscript"), "Stability"), 
-          width = 6, 
-          collapsible = TRUE, 
-          solidHeader = TRUE,
-          
-          p("The jacobian matrix of the system is:"),
-          p("$$
+        tagAppendAttributes(
+          bs4Card(
+            title = tagList(shiny::icon("superscript"), "Stability"), 
+            width = 6, 
+            collapsible = TRUE, 
+            solidHeader = TRUE,
+            
+            p("The jacobian matrix of the system is:"),
+            p("$$
             \\begin{align}
             J^{\\ast} = 
             \\begin{pmatrix}
@@ -192,8 +202,8 @@ body <- bs4DashBody(
             Y & X & -b
             \\end{pmatrix}
             \\end{align}$$"),
-          p("Besides, to find the characteristic equation, we let:"),
-          p("$$
+            p("Besides, to find the characteristic equation, we let:"),
+            p("$$
             \\begin{align}
             det(J^{\\ast}- \\lambda I) = 0 \\Longleftrightarrow
             \\begin{vmatrix}
@@ -202,14 +212,16 @@ body <- bs4DashBody(
             Y & X & -b-\\lambda
             \\end{vmatrix}
             \\end{align} = 0.$$"),
-          p("In \\(\\Big(0,0,0\\Big)\\) this gives:"),
-          p("$$
+            p("The characteristic equation is:"),
+            p("$$
             \\begin{align}
-            \\lambda^3 + \\lambda^2(1+a+b) + \\lambda(a+ab+b-ac) + ab(1-c) = 0 
+            \\lambda^3 + \\lambda^2(1+a+b) + \\lambda(a+ab+b-ac+X^2+aZ) + ab(1-c+Z) + aX(X+Y) = 0 
             \\end{align}.$$"),
-          p("Applying the Routh-Hurwitz criterion in \\(R^3\\), we see that 
+            p("Applying the Routh-Hurwitz criterion in \\(R^3\\), we see that 
             \\(\\Big(0,0,0\\Big)\\) is stable if and only if \\(c \\leq 1\\)."),
-          elevation = 4
+            elevation = 4
+          ),
+          style = "overflow-x: auto;"
         ),
         bs4Card(
           title = tagList(shiny::icon("superscript"), "Bifurcations"), 

@@ -115,7 +115,7 @@ server <- function(input, output, session) {
         eq3 = c(-A, -A, B)
       )
     } else {
-     list(eq1 = c(0, 0, 0)) 
+      list(eq1 = c(0, 0, 0)) 
     }
   })
   
@@ -160,6 +160,20 @@ server <- function(input, output, session) {
   
   observe({
     print(stability())
+  })
+  
+  
+  lapply(1:3, FUN = function(i){
+    output[[paste0("info_eq", i)]] <- renderbs4InfoBox({
+      bs4InfoBox(
+        title = equilibria()[[i]],
+        "Jacobian is:", stability()[[i]][[2]],
+        value = stability()[[i]][[1]],
+        icon = "question-circle",
+        width = 4,
+        status = if (stability()[[i]][[1]] == "stable") "success" else "danger"
+      )
+    })
   })
   
   #-------------------------------------------------------------------------
