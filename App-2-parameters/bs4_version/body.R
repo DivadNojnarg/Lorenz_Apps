@@ -3,6 +3,11 @@ body <- bs4DashBody(
   withMathJax(),
   useShinyFeedback(),
   
+  # unleash shinyEffects
+  setZoom(class = "info-box"),
+  # unleash shinyWidgets
+  chooseSliderSkin(skin = "Flat"),
+  
   bs4TabItems(
     bs4TabItem(
       tabName = "main",

@@ -1,16 +1,16 @@
 # Server code
-shinyServer(function(input, output, session) {
+server <- function(input, output, session) {
   
   #-------------------------------------------------------------------------
   #
-  #  Useful reactive expressions ...
+  #  Set up parameters, initial conditions and integration time in reactives
   #
   #-------------------------------------------------------------------------
   
   # store reactives values
-  parameters <- reactive({c("a" = input$a,"b" = input$b,"c" = input$c)})
-  state <- reactive({c("X" = input$X0,"Y" = input$Y0,"Z" = input$Z0)})
-  times <- reactive({seq(0,input$tmax, by = input$dt)})
+  parameters <- reactive(c("a" = input$a,"b" = input$b,"c" = input$c))
+  state <- reactive(c("X" = input$X0,"Y" = input$Y0,"Z" = input$Z0))
+  times <- reactive(seq(0,input$tmax, by = input$dt))
   
   #-------------------------------------------------------------------------
   #
@@ -30,6 +30,7 @@ shinyServer(function(input, output, session) {
     } else {
       r1 <- paste(input$c, ">", res, ": Hopf-bifurcation")
     }
+    
     bs4InfoBox(
       title = "Hopf Bifurcation?", 
       value = r1, 
@@ -37,8 +38,10 @@ shinyServer(function(input, output, session) {
       status = NULL,  
       iconElevation = 4
     )
+    
   })
   
+  # pitchfork bifurcation or not?
   output$pitchfork <- renderbs4InfoBox({
     if (0 < input$c && input$c <= 1) {
       r2 <- paste(0, "=<", input$c,"=<", 1, ": (0,0,0) is the only one equilibrium")
@@ -53,10 +56,13 @@ shinyServer(function(input, output, session) {
       status = NULL,
       iconElevation = 4
     )
+    
   })
   
   
-  # integrate the Lorenz ode model with reactive inputs, solver is selected by the user
+  # integrate the Lorenz ode model with reactive inputs, 
+  # solver is selected by the user in the right sidebar
+  # deSolve or RxODE, respectively
   out <- reactive({
     
     parameters <- parameters()
@@ -75,6 +81,8 @@ shinyServer(function(input, output, session) {
           atol = input$atol
         )
       )
+      # use else since the only other possibility is RxODE
+      # might change if we add another solver
     } else {
       ev1$add.sampling(times)
       as.data.frame(
@@ -89,8 +97,80 @@ shinyServer(function(input, output, session) {
   })
   
   
+  # find eauilibria
+  equilibria <- reactive({
+    
+    A <- if (input$c >= 1) input$b * (input$c - 1) else NULL
+    # check if sqrt makes sense from mathematical 
+    # point of view
+    if (!is.null(A)) A <- sqrt(A) else NULL
+    B <- input$c - 1
+    
+    # return the number of eauilibria 
+    # depending on A
+    if (!is.null(A)) {
+      list(
+        eq1 = c(0, 0, 0),
+        eq2 = c(A, A, B),
+        eq3 = c(-A, -A, B)
+      )
+    } else {
+     list(eq1 = c(0, 0, 0)) 
+    }
+  })
+  
+  observe(print(equilibria()))
+  
+  
+  # perform stability analysis
+  # we need out()
+  stability <- reactive({
+    
+    req(equilibria())
+    
+    lapply(
+      seq_along(equilibria()),
+      FUN = function(i) {
+        
+        x_i <- equilibria()[[i]][1]
+        y_i <- equilibria()[[i]][2]
+        z_i <- equilibria()[[i]][3]
+        
+        jac <- matrix(
+          c(-input$a, input$a, 0,
+            input$c - z_i, -1, -x_i,
+            y_i, x_i, -input$b  
+          ),
+          nrow = 3,
+          byrow = TRUE
+        )
+        
+        # routh hurwitz criterion
+        a1 <- 1 + input$a + input$b
+        a2 <- input$a + input$a * input$b + input$b - input$a * input$c + x_i^2 + input$a * z_i
+        a3 <- input$a * input$b * (1 - input$c + z_i) + input$a * x_i * (x_i + y_i)
+        
+        # stability criterion
+        res <- if (a1 > 0 && a1 * a2 > a3 && a3 > 0) "stable" else "unstable"
+        return(list(res, jac))
+      }
+    )
+    
+  })
+  
+  observe({
+    print(stability())
+  })
+  
+  #-------------------------------------------------------------------------
+  #
+  #  Output the results in a table
+  #
+  #-------------------------------------------------------------------------
+  
+  
   # Generate the output table
-  output$table <- renderDataTable({out()},options = list(pageLength = 5))
+  output$table <- renderDataTable(out(), options = list(pageLength = 5))
   
   #-------------------------------------------------------------------------
   #
@@ -143,7 +223,7 @@ shinyServer(function(input, output, session) {
         x = out[1, "X"], 
         y = out[1, "Y"], 
         z = out[1, "Z"], 
-        name = '(X0,YO,Z0)') %>% # initial position
+        name = '(X0,Y0,Z0)') %>% # initial position
       add_markers(
         x = sqrt(input$b*(input$c - 1)), 
         y = sqrt(input$b*(input$c - 1)), 
@@ -198,37 +278,23 @@ shinyServer(function(input, output, session) {
       write.csv(out(), file)
     })
   
-  # reset all the values of box inputs
+  # reset all the values of the right sidebar
   observeEvent(input$resetAll, {
-    shinyjs::reset("sidebar_main")
-    shinyjs::reset("sidebar_bis")
+    shinyjs::reset("controlbar")
   })
   
-  # save and load a session
+  # save input parameters into the global values
   observeEvent(input$save, {
     values <<- lapply(reactiveValuesToList(input), unclass)
   })
   
+  # restore inputs when click on load
   observeEvent(input$load, {
     if (exists("values")) {
       lapply(names(values), function(x) {
         session$sendInputMessage(x, list(value = values[[x]]))
       }) 
     }
-  })
-  
-  # When the button is clicked, wrap the code in a call to
-  # `withBusyIndicatorServer()`
-  observeEvent(input$save, {
-    withBusyIndicatorServer("save", {
-      Sys.sleep(1)
-    })
-  })
-  
-  observeEvent(input$load, {
-    withBusyIndicatorServer("load", {
-      Sys.sleep(1)
-    })
   })
   
   #reset sliders individually
@@ -249,4 +315,4 @@ shinyServer(function(input, output, session) {
   # Only works with shiny server > 1.4.7
   session$allowReconnect(TRUE)
   
-})
+}

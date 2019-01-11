@@ -2,6 +2,7 @@
 library(shiny)
 library(plotly)
 library(deSolve)
+library(rootSolve)
 library(RxODE)
 library(bs4Dash)
 library(bsplus)
@@ -10,12 +11,12 @@ library(shinycssloaders)
 library(shinyWidgets)
 library(shinyFeedback)
 library(stringr)
+library(shinyEffects)
 
 # Load the template components
 source("navbar.R")
 source("sidebar.R")
 source("body.R")
-source("helpers.R")
 source("controlbar.R")
 
 # Define the model equations
