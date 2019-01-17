@@ -294,7 +294,9 @@ server <- function(input, output, session) {
   
   # reset all the values of the right sidebar
   observeEvent(input$resetAll, {
-    shinyjs::reset("controlbar")
+    reset("controlbar")
+    reset("3d_plot")
+    reset("phase_plot")
   })
   
   # save input parameters into the global values

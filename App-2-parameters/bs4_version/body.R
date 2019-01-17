@@ -22,122 +22,128 @@ body <- bs4DashBody(
       ),
       # plots
       fluidRow(
-        bs4Card(
-          title = tagList(shiny::icon("area-chart"), "Graph 3D"), 
-          width = 6, 
-          collapsible = TRUE, 
-          solidHeader = TRUE, 
-          withSpinner(
-            plotlyOutput("plot2", height = 400), 
-            size = 2, 
-            type = 8, 
-            color = "#000000"
-          ),
-          footer = tagList(
-            fluidRow(
-              column(
-                width = 4,
-                align = "center",
-                sliderInput(
-                  "a", 
-                  label = "Value of a:", 
-                  min = 0, 
-                  max = 20, 
-                  value = 10) %>%
-                  shinyInput_label_embed(
-                    icon("undo") %>%
-                      actionBttn(
-                        inputId = "reset_a",
-                        label = "", 
-                        color = "danger", 
-                        size = "xs"
-                      )
-                  )
-              ),
-              column(
-                width = 4,
-                align = "center",
-                sliderInput(
-                  "b", 
-                  label = "Value of b:", 
-                  min = 0, 
-                  max = 10, 
-                  value = 3) %>%
-                  shinyInput_label_embed(
-                    icon("undo") %>%
-                      actionBttn(
-                        inputId = "reset_b",
-                        label = "", 
-                        color = "danger", 
-                        size = "xs"
-                      )
-                  )
-              ),
-              column(
-                width = 4,
-                align = "center",
-                sliderInput(
-                  "c", 
-                  label = "Value of c:", 
-                  min = 0, 
-                  max = 100, 
-                  value = 28) %>%
-                  shinyInput_label_embed(
-                    icon("undo") %>%
-                      actionBttn(
-                        inputId = "reset_c",
-                        label = "", 
-                        color = "danger", 
-                        size = "xs"
-                      )
-                  )
+        tagAppendAttributes(
+          id = "3d_plot",
+          bs4Card(
+            title = tagList(shiny::icon("area-chart"), "Graph 3D"), 
+            width = 6, 
+            collapsible = TRUE, 
+            solidHeader = TRUE, 
+            withSpinner(
+              plotlyOutput("plot2", height = 400), 
+              size = 2, 
+              type = 8, 
+              color = "#000000"
+            ),
+            footer = tagList(
+              fluidRow(
+                column(
+                  width = 4,
+                  align = "center",
+                  sliderInput(
+                    "a", 
+                    label = "Value of a:", 
+                    min = 0, 
+                    max = 20, 
+                    value = 10) %>%
+                    shinyInput_label_embed(
+                      icon("undo") %>%
+                        actionBttn(
+                          inputId = "reset_a",
+                          label = "", 
+                          color = "danger", 
+                          size = "xs"
+                        )
+                    )
+                ),
+                column(
+                  width = 4,
+                  align = "center",
+                  sliderInput(
+                    "b", 
+                    label = "Value of b:", 
+                    min = 0, 
+                    max = 10, 
+                    value = 3) %>%
+                    shinyInput_label_embed(
+                      icon("undo") %>%
+                        actionBttn(
+                          inputId = "reset_b",
+                          label = "", 
+                          color = "danger", 
+                          size = "xs"
+                        )
+                    )
+                ),
+                column(
+                  width = 4,
+                  align = "center",
+                  sliderInput(
+                    "c", 
+                    label = "Value of c:", 
+                    min = 0, 
+                    max = 100, 
+                    value = 28) %>%
+                    shinyInput_label_embed(
+                      icon("undo") %>%
+                        actionBttn(
+                          inputId = "reset_c",
+                          label = "", 
+                          color = "danger", 
+                          size = "xs"
+                        )
+                    )
+                )
               )
-            )
-          ),
-          elevation = 4
+            ),
+            elevation = 4
+          )
         ),
-        bs4Card(
-          title = tagList(shiny::icon("area-chart"), "Phase Plane"),
-          width = 6, 
-          collapsible = TRUE, 
-          solidHeader = TRUE,
-          withSpinner(
-            plotlyOutput("plot3", height = 400), 
-            size = 2, type = 8, color = "#000000"
-          ),
-          footer = tagList(
-            fluidRow(
-              column(
-                width = 6,
-                align = "center",
-                prettyRadioButtons(
-                  shape = "square",
-                  inputId = "xvar",
-                  animation = "pulse",
-                  choices = c("X", "Y", "Z"),
-                  selected = "X",
-                  status = "primary",
-                  label = "X axis variable",
-                  inline = TRUE
-                ) 
-              ),
-              column(
-                width = 6,
-                align = "center",
-                prettyRadioButtons(
-                  shape = "square",
-                  inputId = "yvar",
-                  animation = "pulse",
-                  choices = c("X", "Y", "Z"),
-                  selected = "Y",
-                  status = "primary",
-                  label = "Y axis variable",
-                  inline = TRUE
-                ) 
+        tagAppendAttributes(
+          id = "phase_plot",
+          bs4Card(
+            title = tagList(shiny::icon("area-chart"), "Phase Plane"),
+            width = 6, 
+            collapsible = TRUE, 
+            solidHeader = TRUE,
+            withSpinner(
+              plotlyOutput("plot3", height = 400), 
+              size = 2, type = 8, color = "#000000"
+            ),
+            footer = tagList(
+              fluidRow(
+                column(
+                  width = 6,
+                  align = "center",
+                  prettyRadioButtons(
+                    shape = "square",
+                    inputId = "xvar",
+                    animation = "pulse",
+                    choices = c("X", "Y", "Z"),
+                    selected = "X",
+                    status = "primary",
+                    label = "X axis variable",
+                    inline = TRUE
+                  ) 
+                ),
+                column(
+                  width = 6,
+                  align = "center",
+                  prettyRadioButtons(
+                    shape = "square",
+                    inputId = "yvar",
+                    animation = "pulse",
+                    choices = c("X", "Y", "Z"),
+                    selected = "Y",
+                    status = "primary",
+                    label = "Y axis variable",
+                    inline = TRUE
+                  ) 
+                )
               )
-            )
-          ),
-          elevation = 4
+            ),
+            elevation = 4
+          )
         )
       ),
       fluidRow(
