@@ -12,8 +12,7 @@ sidebar <- bs4DashSidebar(
   bs4SidebarMenu(
     bs4SidebarMenuItem("App", tabName = "main", icon = "home"),
     bs4SidebarMenuItem("Datas", tabName = "datas", icon = "table"),
-    bs4SidebarMenuItem("Analysis", tabName = "analysis", icon = "superscript"),
-    bs4SidebarMenuItem("Info", tabName = "info", icon = "info")
+    bs4SidebarMenuItem("Analysis", tabName = "analysis", icon = "superscript")
   )
 )
 

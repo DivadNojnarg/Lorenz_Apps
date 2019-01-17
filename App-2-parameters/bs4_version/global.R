@@ -29,6 +29,10 @@ Lorenz <- function(t, state, parameters) {
   })
 }
 
+# Compile model
+#system("R CMD SHLIB Lorenz.c")
+#dyn.load(paste0("Lorenz", .Platform$dynlib.ext))
+
 # compilation if needed with RxODE
 lorenz_RxODE <- "
    d/dt(X) = a * (Y - X);

@@ -74,7 +74,11 @@ server <- function(input, output, session) {
         ode(
           y = state, 
           times = times, 
-          func = Lorenz, 
+          func = Lorenz,
+          #func = "derivs", 
+          #jacfunc = "jac",
+          #dllname = "Lorenz",
+          #initfunc = "initmod",
           parms = parameters, 
           method = input$solver, 
           rtol = input$rtol, 
@@ -165,13 +169,26 @@ server <- function(input, output, session) {
   
   lapply(1:3, FUN = function(i){
     output[[paste0("info_eq", i)]] <- renderbs4InfoBox({
+      
+      eq <- round(equilibria()[[i]])
+      jac <- stability()[[i]][[2]]
+      stability <- stability()[[i]][[1]]
+      
       bs4InfoBox(
-        title = equilibria()[[i]],
-        "Jacobian is:", stability()[[i]][[2]],
-        value = stability()[[i]][[1]],
+        title =  HTML(paste0("(", eq[1], ", ", eq[2], ", ", eq[3], ")")),
+        withMathJax(paste("$$
+            \\begin{align}
+            J^{\\ast} = 
+            \\begin{pmatrix}
+            ", jac[1], " & ", jac[2], " & ", jac[3], " \\\\
+            ", jac[4], " & ", jac[5], " & ", jac[6], " \\\\
+            ", jac[7], " & ", jac[8], " & ", jac[9], "
+            \\end{pmatrix}
+            \\end{align}$$")),
+        value = stability,
         icon = "question-circle",
         width = 4,
-        status = if (stability()[[i]][[1]] == "stable") "success" else "danger"
+        status = if (stability == "stable") "success" else "warning"
       )
     })
   })
