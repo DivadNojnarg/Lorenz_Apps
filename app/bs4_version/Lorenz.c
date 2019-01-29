@@ -15,7 +15,7 @@ void initmod(void (* odeparms)(int *, double *))
 /* Derivatives and 1 output variable */
 void derivs(int *neq, double *t, double *y, double *ydot, double *yout, int *ip)
 {
-  if (ip[0] <1) error("nout should be at least 1");
+  //if (ip[0] <1) error("nout should be at least 1");
   ydot[0] = a * (y[1] - y[0]);
   ydot[1] = y[0] * (c - y[2]) - y[1];
   ydot[2] = y[0] * y[1] - b * y[2];
@@ -31,9 +31,9 @@ void jac(int *neq, double *t, double *y, int *ml, int *mu,
   pd[1] = c - y[2];
   pd[2] = y[1];
   pd[(*nrowpd)] = a;
-  pd[(*nrowpd) + 1] = -1;
+  pd[(*nrowpd) + 1] = -1.0;
   pd[(*nrowpd) + 2] = y[0];
-  pd[(*nrowpd)*2] = 0;
+  pd[(*nrowpd)*2] = 0.0;
   pd[2*(*nrowpd) + 1] = -y[0];
   pd[2*(*nrowpd) + 2] = -b;
 }

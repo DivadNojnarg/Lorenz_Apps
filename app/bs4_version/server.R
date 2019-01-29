@@ -8,9 +8,9 @@ server <- function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # store reactives values
-  parameters <- reactive(c("a" = input$a,"b" = input$b,"c" = input$c))
-  state <- reactive(c("X" = input$X0,"Y" = input$Y0,"Z" = input$Z0))
-  times <- reactive(seq(0,input$tmax, by = input$dt))
+  parameters <- reactive(c("a" = input$a, "b" = input$b, "c" = input$c))
+  state <- reactive(c("X" = input$X0, "Y" = input$Y0, "Z" = input$Z0))
+  times <- reactive(seq(0, input$tmax, by = input$dt))
   
   #-------------------------------------------------------------------------
   #
@@ -65,7 +65,7 @@ server <- function(input, output, session) {
   # deSolve or RxODE, respectively
   out <- reactive({
     
-    parameters <- parameters()
+    parameters <- as.numeric(parameters())
     state <- state()
     times <- times()
     
