@@ -1,5 +1,0 @@
-
-   d/dt(X) = a * (Y - X);
-   d/dt(Y) = X * (c - Z) - Y;
-   d/dt(Z) = X * Y - b * Z;
- 

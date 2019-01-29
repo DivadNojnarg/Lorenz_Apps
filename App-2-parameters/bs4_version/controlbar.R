@@ -56,17 +56,6 @@ controlbar <- tagAppendAttributes(
           )
       ),
     
-    prettyRadioButtons(
-      inputId = "compile",
-      label = "Choose an ODE solver",
-      choices = c("deSolve", "RxODE"),
-      animation = "pulse",
-      selected = "deSolve",
-      thick = TRUE,
-      inline = TRUE,
-      bigger = TRUE
-    ),
-    
     numericInput("X0","Initial value of X:", 1, min = 0, max = 100),
     numericInput("Y0","Initial value of Y:", 1, min = 0, max = 100),
     numericInput("Z0","Initial value of Z:", 1, min = 0, max = 100)

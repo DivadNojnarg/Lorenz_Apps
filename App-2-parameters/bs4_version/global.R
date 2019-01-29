@@ -3,7 +3,6 @@ library(shiny)
 library(plotly)
 library(deSolve)
 library(rootSolve)
-library(RxODE)
 library(bs4Dash)
 library(bsplus)
 library(shinyjs)
@@ -30,15 +29,5 @@ Lorenz <- function(t, state, parameters) {
 }
 
 # Compile model
-#system("R CMD SHLIB Lorenz.c")
-#dyn.load(paste0("Lorenz", .Platform$dynlib.ext))
-
-# compilation if needed with RxODE
-lorenz_RxODE <- "
-   d/dt(X) = a * (Y - X);
-   d/dt(Y) = X * (c - Z) - Y;
-   d/dt(Z) = X * Y - b * Z;
-"
-mod1 <- RxODE(model = lorenz_RxODE, modName = "lorenz_RxODE", 
-              wd = getwd(), do.compile = TRUE)
-ev1 <- eventTable()
+system("R CMD SHLIB Lorenz.c")
+dyn.load(paste0("Lorenz", .Platform$dynlib.ext))

@@ -69,35 +69,22 @@ server <- function(input, output, session) {
     state <- state()
     times <- times()
     
-    if (input$compile == "deSolve") {
-      as.data.frame(
-        ode(
-          y = state, 
-          times = times, 
-          func = Lorenz,
-          #func = "derivs", 
-          #jacfunc = "jac",
-          #dllname = "Lorenz",
-          #initfunc = "initmod",
-          parms = parameters, 
-          method = input$solver, 
-          rtol = input$rtol, 
-          atol = input$atol
-        )
+    #as.data.frame(
+      ode(
+        y = state, 
+        times = times, 
+        #func = Lorenz,
+        func = "derivs", 
+        jacfunc = "jac",
+        dllname = "Lorenz",
+        initfunc = "initmod",
+        parms = parameters, 
+        method = input$solver, 
+        rtol = input$rtol, 
+        atol = input$atol
       )
-      # use else since the only other possibility is RxODE
-      # might change if we add another solver
-    } else {
-      ev1$add.sampling(times)
-      as.data.frame(
-        mod1$solve(
-          params = parameters, 
-          events = ev1, 
-          inits = state, 
-          stiff = TRUE
-        )
-      )
-    }
+    #)
+    
   })
   
   
@@ -230,7 +217,6 @@ server <- function(input, output, session) {
       mode = 'lines') %>%
       add_lines(y = ~Y, name = 'Y') %>%
       add_lines(y = ~Z, name = 'Z')
-    
   })
   
   
@@ -243,30 +229,30 @@ server <- function(input, output, session) {
     out <- out()
     
     p2 <- plot_ly(
-      out, 
-      x = out[, "X"], 
-      y = out[, "Y"], 
-      z = out[, "Z"], 
-      type = 'scatter3d', 
-      mode = 'lines', 
-      line = list(width = 4)) %>%
-      add_markers(
-        x = out[1, "X"], 
-        y = out[1, "Y"], 
-        z = out[1, "Z"], 
-        name = '(X0,Y0,Z0)') %>% # initial position
-      add_markers(
-        x = sqrt(input$b*(input$c - 1)), 
-        y = sqrt(input$b*(input$c - 1)), 
-        z = input$c - 1, 
-        marker = list(color = "#000000"), 
-        name = "Non trivial Eq1") %>% # other steady state
-      add_markers(
-        x = -sqrt(input$b*(input$c - 1)), 
-        y = -sqrt(input$b*(input$c - 1)), 
-        z = input$c - 1, 
-        marker = list(color = "#000000"), 
-        name = "Non trivial Eq2") # other steady state
+     out, 
+     x = out[, "X"], 
+     y = out[, "Y"], 
+     z = out[, "Z"], 
+     type = 'scatter3d', 
+     mode = 'lines', 
+     line = list(width = 4)) %>%
+     add_markers(
+       x = out[1, "X"], 
+       y = out[1, "Y"], 
+       z = out[1, "Z"], 
+       name = '(X0,Y0,Z0)') %>% # initial position
+     add_markers(
+       x = sqrt(input$b*(input$c - 1)), 
+       y = sqrt(input$b*(input$c - 1)), 
+       z = input$c - 1, 
+       marker = list(color = "#000000"), 
+       name = "Non trivial Eq1") %>% # other steady state
+     add_markers(
+       x = -sqrt(input$b*(input$c - 1)), 
+       y = -sqrt(input$b*(input$c - 1)), 
+       z = input$c - 1, 
+       marker = list(color = "#000000"), 
+       name = "Non trivial Eq2") # other steady state
     
   }) 
   

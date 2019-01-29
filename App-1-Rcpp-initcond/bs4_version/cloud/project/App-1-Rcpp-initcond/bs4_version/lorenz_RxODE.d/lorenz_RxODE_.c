@@ -298,7 +298,7 @@ extern void lorenz_RxODE__ode_solver(int *neq,
 			   double *lhs,
 			   int *rc){
   // Backward compatible ode solver for 0.5* C interface
-  //if (_ptrid() != 1547216395 ){ _assign_ptr(lorenz_RxODE__model_vars());}
+  //if (_ptrid() != 1547764420 ){ _assign_ptr(lorenz_RxODE__model_vars());}
   double *_theta = theta;
   _old_c(neq, _theta, time, evid, ntime, inits, dose, ret, atol, rtol, stiff, transit_abs, nlhs, lhs, rc);
 }
@@ -427,7 +427,7 @@ extern SEXP lorenz_RxODE__model_vars(){
     SEXP state    = PROTECT(allocVector(STRSXP, 3));pro++;
     SEXP stateRmS = PROTECT(allocVector(INTSXP, 3));pro++;
     SEXP timeInt = PROTECT(allocVector(INTSXP, 1));pro++;
-    INTEGER(timeInt)[0] = 1547216395;
+    INTEGER(timeInt)[0] = 1547764420;
     SEXP sens     = PROTECT(allocVector(STRSXP, 0));pro++;
     SEXP normState= PROTECT(allocVector(STRSXP, 3));pro++;
     SEXP fn_ini   = PROTECT(allocVector(STRSXP, 0));pro++;
