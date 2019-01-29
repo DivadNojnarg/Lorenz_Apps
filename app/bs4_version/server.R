@@ -69,7 +69,7 @@ server <- function(input, output, session) {
     state <- state()
     times <- times()
     
-    #as.data.frame(
+    as.data.frame(
       ode(
         y = state, 
         times = times, 
@@ -83,7 +83,7 @@ server <- function(input, output, session) {
         rtol = input$rtol, 
         atol = input$atol
       )
-    #)
+    )
     
   })
   

@@ -199,6 +199,7 @@ body <- bs4DashBody(
           active = TRUE,
           
           bs4Accordion(
+            id = "info_accordion",
             bs4AccordionItem(
               id = "app_tour",
               title = "App Tour", 
