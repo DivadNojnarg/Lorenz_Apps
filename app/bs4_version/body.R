@@ -193,6 +193,7 @@ body <- bs4DashBody(
       bs4TabCard(
         elevation = 4, 
         width = 12,
+        side = "right",
         title = tagList(shiny::icon("info"), "Infos"),
         bs4TabPanel(
           tabName = "About", 
