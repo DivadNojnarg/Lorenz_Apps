@@ -329,6 +329,15 @@ server <- function(input, output, session) {
     }, ignoreInit = TRUE)
   })
   
+  # deleted dlls on stop 
+  session$onSessionEnded(function() {
+    if (.Platform$OS.type == "unix") {
+      file.remove("Lorenz.o")
+      file.remove("Lorenz.so")
+    } else if (.Platform$OS.type == "windows") {
+      file.remove("Lorenz.dll")
+    }
+  })
   
   # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
   # Only works with shiny server > 1.4.7
