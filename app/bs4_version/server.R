@@ -252,13 +252,12 @@ server <- function(input, output, session) {
        y = -sqrt(input$b*(input$c - 1)), 
        z = input$c - 1, 
        marker = list(color = "#000000"), 
-       name = "Non trivial Eq2") # other steady state
+       name = "Non trivial Eq2") %>% # other steady state
+      layout(legend = list(orientation = 'h'))
     
   }) 
   
   # plot phase plan projection as a function of 2 selected values by the user
-  
-  
   output$plot3 <- renderPlotly({
     
     parameters <- parameters()
