@@ -22,20 +22,21 @@ body <- bs4DashBody(
       ),
       # plots
       fluidRow(
-        tagAppendAttributes(
-          id = "3d_plot",
-          bs4Card(
-            title = tagList(shiny::icon("area-chart"), "Graph 3D"), 
-            width = 6, 
-            collapsible = TRUE, 
-            solidHeader = TRUE, 
+        bs4TabCard(
+          elevation = 4, 
+          width = 12,
+          side = "right",
+          title = tagList(tagList(shiny::icon("area-chart"), "Outputs")),
+          bs4TabPanel(
+            tabName = "Graph 3D", 
+            active = TRUE,
             withSpinner(
-              plotlyOutput("plot2", height = 400), 
+              plotlyOutput("plot2", height = 500), 
               size = 2, 
               type = 8, 
               color = "#000000"
             ),
-            footer = tagList(
+            tagAppendAttributes(
               fluidRow(
                 column(
                   width = 4,
@@ -94,23 +95,23 @@ body <- bs4DashBody(
                         )
                     )
                 )
+              ),
+              id = "3d_plot"
+            )
+          ),
+          bs4TabPanel(
+            tabName = "Phase Plane", 
+            fluidRow(
+              column(
+                width = 12,
+                align = "center",
+                withSpinner(
+                  plotlyOutput("plot3", height = 400, width = "80%"), 
+                  size = 2, type = 8, color = "#000000"
+                )
               )
             ),
-            elevation = 4
-          )
-        ),
-        tagAppendAttributes(
-          id = "phase_plot",
-          bs4Card(
-            title = tagList(shiny::icon("area-chart"), "Phase Plane"),
-            width = 6, 
-            collapsible = TRUE, 
-            solidHeader = TRUE,
-            withSpinner(
-              plotlyOutput("plot3", height = 400), 
-              size = 2, type = 8, color = "#000000"
-            ),
-            footer = tagList(
+            tagAppendAttributes(
               fluidRow(
                 column(
                   width = 6,
@@ -140,25 +141,19 @@ body <- bs4DashBody(
                     inline = TRUE
                   ) 
                 )
-              )
-            ),
-            elevation = 4
-          )
-        )
-      ),
-      fluidRow(
-        bs4Card(
-          title = tagList(shiny::icon("line-chart"), "Time Series"), 
-          width = 6, 
-          collapsible = TRUE, 
-          solidHeader = TRUE,
-          withSpinner(
-            plotlyOutput("plot1", height = 400), 
-            size = 2, 
-            type = 8, 
-            color = "#000000"
+              ),
+              id = "phase_plot"
+            )
           ),
-          elevation = 4
+          bs4TabPanel(
+            tabName = "Time Series",
+            withSpinner(
+              plotlyOutput("plot1", height = 400), 
+              size = 2, 
+              type = 8, 
+              color = "#000000"
+            )
+          )
         )
       )
     ),
@@ -242,7 +237,7 @@ body <- bs4DashBody(
               \\frac{dZ}{dt} & = 0.
               \\end{align}
               \\right.$$"),
-                  p("This leads to 3 equilibrium points: \\(\\Big(0,0,0\\Big)\\), 
+              p("This leads to 3 equilibrium points: \\(\\Big(0,0,0\\Big)\\), 
               \\(\\Big(\\sqrt{b(c-1)},\\sqrt{b(c-1)}, c-1\\Big)\\) and 
               \\(\\Big(-\\sqrt{b(c-1)},-\\sqrt{b(c-1)}, c-1\\Big)\\).")
             )
@@ -251,7 +246,8 @@ body <- bs4DashBody(
         bs4TabPanel(
           tabName = "Stability", 
           active = FALSE,
-          tagList(shiny::icon("superscript"), "Stability"),
+          h3(shiny::icon("superscript"), "Stability"),
+          br(),
           p("The jacobian matrix of the system is:"),
           p("$$
             \\begin{align}
@@ -284,7 +280,8 @@ body <- bs4DashBody(
         bs4TabPanel(
           tabName = "Bifurcations", 
           active = FALSE,
-          tagList(shiny::icon("superscript"), "Bifurcations"),
+          h3(shiny::icon("superscript"), "Bifurcations"),
+          br(),
           fluidRow(
             bs4InfoBoxOutput("hopf", width = 6),
             bs4InfoBoxOutput("pitchfork", width = 6) 

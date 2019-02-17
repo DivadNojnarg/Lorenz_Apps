@@ -69,22 +69,24 @@ server <- function(input, output, session) {
     state <- state()
     times <- times()
     
+    # scale back
+    atol <- 1e-06 * input$atol
+    rtol <- 1e-06 * input$rtol
+    
     as.data.frame(
       ode(
         y = state, 
         times = times, 
-        #func = Lorenz,
         func = "derivs", 
         jacfunc = "jac",
         dllname = "Lorenz",
         initfunc = "initmod",
         parms = parameters, 
         method = input$solver, 
-        rtol = input$rtol, 
-        atol = input$atol
+        rtol = rtol, 
+        atol = atol
       )
     )
-    
   })
   
   
@@ -109,8 +111,6 @@ server <- function(input, output, session) {
       list(eq1 = c(0, 0, 0)) 
     }
   })
-  
-  observe(print(equilibria()))
   
   
   # perform stability analysis
@@ -149,11 +149,8 @@ server <- function(input, output, session) {
     
   })
   
-  observe({
-    print(stability())
-  })
-  
-  
+
+  # render info boxes for stability 
   lapply(1:3, FUN = function(i){
     output[[paste0("info_eq", i)]] <- renderbs4InfoBox({
       
@@ -185,7 +182,6 @@ server <- function(input, output, session) {
   #  Output the results in a table
   #
   #-------------------------------------------------------------------------
-  
   
   # Generate the output table
   output$table <- renderDataTable(out(), options = list(pageLength = 5))
