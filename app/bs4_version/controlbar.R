@@ -9,7 +9,7 @@
 controlbar <- bs4DashControlbar(
   skin = "light",
   title = "Solver Settings",
-  solverInputUi(id = "solver_inputs")
+  solverInputsUi(id = "solver_inputs")
 )
 
 # add an id arg to reset the controlbar input with shinyjs

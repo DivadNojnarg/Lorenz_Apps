@@ -1,4 +1,4 @@
-bifurcationUi <- function(id) {
+bifurcationsUi <- function(id) {
   ns <- NS(id)
   fluidRow(
     bs4InfoBoxOutput(ns("hopf"), width = 6),

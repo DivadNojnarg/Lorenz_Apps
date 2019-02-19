@@ -93,7 +93,7 @@ body <- bs4DashBody(
     ),
     bs4TabItem(
       tabName = "datas",
-      dataTableUid(id = "datatable")
+      dataTableUi(id = "datatable")
     ),
     bs4TabItem(
       tabName = "analysis",
