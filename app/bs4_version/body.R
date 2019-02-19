@@ -3,23 +3,18 @@ body <- bs4DashBody(
   withMathJax(),
   useShinyFeedback(),
   
+  # load custom javascript
+  includeScript(path = "www/js/find-navigator.js"),
+  
   # unleash shinyEffects
-  setZoom(class = "info-box"),
+  setZoom(class = "info-box", scale = 1.02),
   # unleash shinyWidgets
   chooseSliderSkin(skin = "Flat"),
   
   bs4TabItems(
     bs4TabItem(
       tabName = "main",
-      fluidRow(
-        lapply(1:3, FUN = function(i) {
-          column(
-            width = 4,
-            align = "center",
-            bs4InfoBoxOutput(paste0(paste0("info_eq", i)), width = 12)
-          )
-        })
-      ),
+      stabilityUi(id = "stability"),
       # plots
       fluidRow(
         bs4TabCard(
@@ -36,68 +31,7 @@ body <- bs4DashBody(
               type = 8, 
               color = "#000000"
             ),
-            tagAppendAttributes(
-              fluidRow(
-                column(
-                  width = 4,
-                  align = "center",
-                  sliderInput(
-                    "a", 
-                    label = "Value of a:", 
-                    min = 0, 
-                    max = 20, 
-                    value = 10) %>%
-                    shinyInput_label_embed(
-                      icon("undo") %>%
-                        actionBttn(
-                          inputId = "reset_a",
-                          label = "", 
-                          color = "danger", 
-                          size = "xs"
-                        )
-                    )
-                ),
-                column(
-                  width = 4,
-                  align = "center",
-                  sliderInput(
-                    "b", 
-                    label = "Value of b:", 
-                    min = 0, 
-                    max = 10, 
-                    value = 3) %>%
-                    shinyInput_label_embed(
-                      icon("undo") %>%
-                        actionBttn(
-                          inputId = "reset_b",
-                          label = "", 
-                          color = "danger", 
-                          size = "xs"
-                        )
-                    )
-                ),
-                column(
-                  width = 4,
-                  align = "center",
-                  sliderInput(
-                    "c", 
-                    label = "Value of c:", 
-                    min = 0, 
-                    max = 100, 
-                    value = 28) %>%
-                    shinyInput_label_embed(
-                      icon("undo") %>%
-                        actionBttn(
-                          inputId = "reset_c",
-                          label = "", 
-                          color = "danger", 
-                          size = "xs"
-                        )
-                    )
-                )
-              ),
-              id = "3d_plot"
-            )
+            computeLorenzUi(id = "compute"),
           ),
           bs4TabPanel(
             tabName = "Phase Plane", 
@@ -159,29 +93,7 @@ body <- bs4DashBody(
     ),
     bs4TabItem(
       tabName = "datas",
-      fluidRow(
-        column(
-          width = 12,
-          align = "center",
-          bs4Card(
-            title = tagList(shiny::icon("table"), "Table"), 
-            width = 9,
-            collapsible = TRUE, 
-            solidHeader = TRUE, 
-            downloadButton(
-              outputId = "downloadData", 
-              label = " Download Table"
-            ),
-            withSpinner(
-              dataTableOutput("table"), 
-              size = 2, 
-              type = 8, 
-              color = "#000000"
-            ),
-            elevation = 4
-          )
-        )
-      )
+      dataTableUid(id = "datatable")
     ),
     bs4TabItem(
       tabName = "analysis",
@@ -282,10 +194,7 @@ body <- bs4DashBody(
           active = FALSE,
           h3(shiny::icon("superscript"), "Bifurcations"),
           br(),
-          fluidRow(
-            bs4InfoBoxOutput("hopf", width = 6),
-            bs4InfoBoxOutput("pitchfork", width = 6) 
-          ),
+          bifurcationsUi(id = "bifurc"),
           br(),
           p("A super-critical pitchfork bifurcation occurs depending on the value of c. 
             If \\(0<c\\leq 1\\), there is only \\(\\Big(0,0,0\\Big)\\) which is stable. 

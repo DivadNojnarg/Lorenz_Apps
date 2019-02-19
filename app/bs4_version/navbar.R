@@ -28,5 +28,18 @@ navbar <- bs4DashNavbar(
     # add horizontal margin between buttons
     tagAppendAttributes,
     class = "mx-2"
+  ),
+  leftUi = tagList(
+    tagAppendAttributes(
+      prettySwitch(
+        inputId = "print_infoboxes",
+        label = "Print Info Boxes?",
+        status = "danger",
+        value = TRUE,
+        fill = TRUE,
+        bigger = TRUE
+      ),
+      class = "my-2"
+    )
   )
 )

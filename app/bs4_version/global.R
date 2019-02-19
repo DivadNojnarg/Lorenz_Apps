@@ -11,6 +11,7 @@ library(shinyWidgets)
 library(shinyFeedback)
 library(stringr)
 library(shinyEffects)
+library(rintrojs)
 
 # Load the template components
 source("navbar.R")
