@@ -1,22 +1,24 @@
 
 # Slider for atol and rtol
 sliderPrecision <- function(inputId, label) {
-  sliderInput(
-    inputId, 
-    label = label, 
-    min = 0.001, 
-    max = 1, 
-    step = 0.001,
-    value = 0.5) %>%
-    shinyInput_label_embed(
-      icon("undo") %>%
-        actionBttn(
-          inputId = paste0("reset_", inputId),
-          label = "", 
-          color = "danger", 
-          size = "xs"
-        )
-    )
+  tagList(
+    sliderInput(
+      inputId, 
+      label = label, 
+      min = 0.001, 
+      max = 1, 
+      step = 0.001,
+      value = 0.5) %>%
+      shinyInput_label_embed(
+        icon("undo") %>%
+          actionBttn(
+            inputId = paste0("reset_", inputId),
+            label = "", 
+            color = "danger", 
+            size = "xs"
+          )
+      )
+  )
 }
 
 

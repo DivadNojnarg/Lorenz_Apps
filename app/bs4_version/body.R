@@ -31,7 +31,7 @@ body <- bs4DashBody(
               type = 8, 
               color = "#000000"
             ),
-            computeLorenzUi(id = "compute"),
+            computeLorenzUi(id = "compute")
           ),
           bs4TabPanel(
             tabName = "Phase Plane", 

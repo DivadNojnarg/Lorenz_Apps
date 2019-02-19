@@ -13,6 +13,13 @@ library(stringr)
 library(shinyEffects)
 library(rintrojs)
 
+# source modules
+source("solverInputsModule.R")
+source("computeLorenzModule.R")
+source("bifurcationsModule.R")
+source("stabilityModule.R")
+source("dataTableModule.R")
+
 # Load the template components
 source("navbar.R")
 source("sidebar.R")
