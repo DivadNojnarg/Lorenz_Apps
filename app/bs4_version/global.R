@@ -13,6 +13,9 @@ library(stringr)
 library(shinyEffects)
 library(rintrojs)
 
+# source help text
+source("help_text.R")
+
 # source modules
 source("solverInputsModule.R")
 source("computeLorenzModule.R")

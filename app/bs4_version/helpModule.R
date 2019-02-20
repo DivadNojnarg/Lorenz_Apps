@@ -56,6 +56,7 @@ helpLorenz <- function(input, output, session) {
   observeEvent(input$help, {
     
     runjs("$('.helpBttn').removeClass('blinking-button')")
+    runjs("$('body').addClass('control-sidebar-slide-open')")
     
     introjs(
       session,
@@ -69,7 +70,7 @@ helpLorenz <- function(input, output, session) {
       ),
       events = list(
         # reset the session to hide sliders and back/next buttons
-        "oncomplete" = I('history.go(0)'),
+        #"oncomplete" = I('history.go(0)'),
         "onbeforchange" = I("function(steps) { Shiny.onInputChange('current_step', data-stepnumber); }"),
         "onbeforechange" = I('$(".newClass").css("max-width", "500px").css("min-width","500px");')
       )

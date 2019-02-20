@@ -27,7 +27,7 @@ solverInputsUi <- function(id) {
   
   ns <- NS(id)
   
-  tagList(
+  introBox(
     # integration steps
     numericInput(inputId = ns("tmax"), label = "Value of tmax:", value = 100, min = 0, max = NA),
     numericInput(inputId = ns("dt"), label = "Step of integration:",  value = 0.01, min = 0, max = NA),
@@ -49,7 +49,9 @@ solverInputsUi <- function(id) {
     # initial conditions 
     numericInput(inputId = ns("X0"), label = "Initial value of X:", value = 1, min = 0, max = 100),
     numericInput(inputId = ns("Y0"), label = "Initial value of Y:", value = 1, min = 0, max = 100),
-    numericInput(inputId = ns("Z0"), label = "Initial value of Z:", value = 1, min = 0, max = 100)
+    numericInput(inputId = ns("Z0"), label = "Initial value of Z:", value = 1, min = 0, max = 100),
+    data.step = 3,
+    data.intro = help_text[3]
   )
 }
 

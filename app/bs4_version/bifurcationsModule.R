@@ -1,8 +1,13 @@
 bifurcationsUi <- function(id) {
   ns <- NS(id)
-  fluidRow(
-    bs4InfoBoxOutput(ns("hopf"), width = 6),
-    bs4InfoBoxOutput(ns("pitchfork"), width = 6) 
+  
+  introBox(
+    fluidRow(
+      bs4InfoBoxOutput(ns("hopf"), width = 6),
+      bs4InfoBoxOutput(ns("pitchfork"), width = 6) 
+    ),
+    data.step = 5,
+    data.intro = help_text[5]
   )
 }
 

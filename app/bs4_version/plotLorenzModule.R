@@ -130,38 +130,43 @@ plotLorenz <- function(input, output, session, mobile, datas, model_params, plot
         )
       )
     } else {
-      bs4Card(
-        elevation = 4, 
-        width = 12,
-        side = "right",
-        title = tagList(tagList(shiny::icon("area-chart"), "Outputs")),
-        fluidRow(
-          column(
-            width = 4,
-            withSpinner(
-              plotlyOutput(ns("plot3D"), height = 500), 
-              size = 2, 
-              type = 8, 
-              color = "#000000"
-            )
-          ),
-          column(
-            width = 4,
-            withSpinner(
-              plotlyOutput(ns("phasePlane"), height = 400, width = "80%"), 
-              size = 2, type = 8, color = "#000000"
-            )
-          ),
-          column(
-            width = 4,
-            withSpinner(
-              plotlyOutput(ns("timeSerie"), height = 400), 
-              size = 2, 
-              type = 8, 
-              color = "#000000"
+      introBox(
+        bs4Card(
+          elevation = 4, 
+          closable = FALSE,
+          width = 12,
+          side = "right",
+          title = tagList(tagList(shiny::icon("area-chart"), "Outputs")),
+          fluidRow(
+            column(
+              width = 4,
+              withSpinner(
+                plotlyOutput(ns("plot3D"), height = 500), 
+                size = 2, 
+                type = 8, 
+                color = "#000000"
+              )
+            ),
+            column(
+              width = 4,
+              withSpinner(
+                plotlyOutput(ns("phasePlane"), height = 400, width = "80%"), 
+                size = 2, type = 8, color = "#000000"
+              )
+            ),
+            column(
+              width = 4,
+              withSpinner(
+                plotlyOutput(ns("timeSerie"), height = 400), 
+                size = 2, 
+                type = 8, 
+                color = "#000000"
+              )
             )
           )
-        )
+        ),
+        data.step = 1,
+        data.intro = help_text[1]
       )
     }
   })

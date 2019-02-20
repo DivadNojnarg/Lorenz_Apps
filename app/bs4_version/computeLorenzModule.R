@@ -3,8 +3,8 @@ sliderLorenz <- function(inputId, label, value, inputIdReset) {
   sliderInput(
     inputId = inputId, 
     label = paste0("Value of ", label, ":"), 
-    min = value / 10, 
-    max = value * 2, 
+    min = value / 50, 
+    max = value * 4, 
     value = value) %>%
     shinyInput_label_embed(
       icon("undo") %>%
@@ -41,45 +41,49 @@ computeLorenzUi <- function(id) {
   
   ns <- NS(id)
   
-  dropdownButton(
-    inputId = ns("parms_list"),
-    label = "Controls",
-    icon = icon("sliders"),
-    status = "primary",
-    circle = FALSE,
-    size = "sm",
-    tooltip = "Model Options",
-    
-    # content: add id attrib to reset with shinyjs
-    chooseSliderSkin(skin = "Flat"),
-    tagAppendAttributes(
-      div(
-        align = "center",
-        style = "height: 400px; overflow-y: scroll; overflow-x: hidden;",
-        sliderLorenz(inputId = ns("a"), label = "a", value = 10, inputIdReset = ns("reset_a")),
-        sliderLorenz(inputId = ns("b"), label = "b", value = 3, inputIdReset = ns("reset_b")),
-        sliderLorenz(inputId = ns("c"), label = "c", value = 28, inputIdReset = ns("reset_c")),
-        hr(),
-        radioLorenz(inputId = ns("xvar"), label = "X axis variable", selected = "X"),
-        radioLorenz(inputId = ns("yvar"), label = "Y axis variable", selected = "Y"),
-        
-        hr(),
-        tagList(
-          tagAppendAttributes(
-            prettySwitch(
-              inputId = ns("print_infoboxes"),
-              label = "Print Info Boxes?",
-              status = "danger",
-              value = TRUE,
-              fill = TRUE,
-              bigger = TRUE
-            ),
-            class = "my-2"
+  introBox(
+    dropdownButton(
+      inputId = ns("parms_list"),
+      label = "Controls",
+      icon = icon("sliders"),
+      status = "primary",
+      circle = FALSE,
+      size = "sm",
+      tooltip = "Model Options",
+      
+      # content: add id attrib to reset with shinyjs
+      chooseSliderSkin(skin = "Flat"),
+      tagAppendAttributes(
+        div(
+          align = "center",
+          style = "height: 400px; overflow-y: scroll; overflow-x: hidden;",
+          sliderLorenz(inputId = ns("a"), label = "a", value = 10, inputIdReset = ns("reset_a")),
+          sliderLorenz(inputId = ns("b"), label = "b", value = 3, inputIdReset = ns("reset_b")),
+          sliderLorenz(inputId = ns("c"), label = "c", value = 28, inputIdReset = ns("reset_c")),
+          hr(),
+          radioLorenz(inputId = ns("xvar"), label = "X axis variable", selected = "X"),
+          radioLorenz(inputId = ns("yvar"), label = "Y axis variable", selected = "Y"),
+          
+          hr(),
+          tagList(
+            tagAppendAttributes(
+              prettySwitch(
+                inputId = ns("print_infoboxes"),
+                label = "Print Info Boxes?",
+                status = "danger",
+                value = TRUE,
+                fill = TRUE,
+                bigger = TRUE
+              ),
+              class = "my-2"
+            )
           )
-        )
-      ),
-      id = "lorenzParms"
-    )
+        ),
+        id = "lorenzParms"
+      )
+    ),
+    data.step = 2,
+    data.intro = help_text[2]
   )
   
 }

@@ -2,29 +2,33 @@ utilsUi <- function(id) {
   ns <- NS(id)
   lapply(
     tagList(
-      actionBttn(
-        icon = icon("floppy"), 
-        inputId = ns("save"), 
-        label = " Save", 
-        color = "primary", 
-        style = "simple",
-        size = "xs"
-      ),
-      actionBttn(
-        icon = icon("refresh"), 
-        inputId = ns("load"), 
-        label = " Load", 
-        color = "primary", 
-        style = "simple",
-        size = "xs"
-      ),
-      actionBttn(
-        icon = icon("trash"), 
-        inputId = ns("resetAll"), 
-        label = " Reset", 
-        color = "danger", 
-        style = "simple",
-        size = "xs"
+      introBox(
+        actionBttn(
+          icon = icon("floppy"), 
+          inputId = ns("save"), 
+          label = " Save", 
+          color = "primary", 
+          style = "simple",
+          size = "xs"
+        ),
+        actionBttn(
+          icon = icon("refresh"), 
+          inputId = ns("load"), 
+          label = " Load", 
+          color = "primary", 
+          style = "simple",
+          size = "xs"
+        ),
+        actionBttn(
+          icon = icon("trash"), 
+          inputId = ns("resetAll"), 
+          label = " Reset", 
+          color = "danger", 
+          style = "simple",
+          size = "xs"
+        ),
+        data.step = 6,
+        data.intro = help_text[6]
       )
     ),
     # add horizontal margin between buttons

@@ -1,13 +1,17 @@
 stabilityUi <- function(id){
   ns <- NS(id)
-  fluidRow(
-    lapply(1:3, FUN = function(i) {
-      column(
-        width = 4,
-        align = "center",
-        bs4InfoBoxOutput(ns(paste0("info_eq", i)), width = 12)
-      )
-    })
+  introBox(
+    fluidRow(
+      lapply(1:3, FUN = function(i) {
+        column(
+          width = 4,
+          align = "center",
+          bs4InfoBoxOutput(ns(paste0("info_eq", i)), width = 12)
+        )
+      })
+    ),
+    data.step = 4,
+    data.intro = help_text[4]
   )
 }
 
@@ -62,9 +66,9 @@ stability <- function(input, output, session, model_params, printInfos) {
         # routh hurwitz criterion
         a1 <- 1 + model_params()[['a']] + model_params()[['b']]
         a2 <- model_params()[['a']] + model_params()[['a']] * model_params()[['b']] + model_params()[['b']] - 
-              model_params()[['a']] * model_params()[['c']] + x_i^2 + model_params()[['a']] * z_i
+          model_params()[['a']] * model_params()[['c']] + x_i^2 + model_params()[['a']] * z_i
         a3 <- model_params()[['a']] * model_params()[['b']] * (1 - model_params()[['c']] + z_i) + 
-              model_params()[['a']] * x_i * (x_i + y_i)
+          model_params()[['a']] * x_i * (x_i + y_i)
         
         # stability criterion
         res <- if (a1 > 0 && a1 * a2 > a3 && a3 > 0) "stable" else "unstable"
@@ -101,6 +105,7 @@ stability <- function(input, output, session, model_params, printInfos) {
         width = 4,
         status = if (stability == "stable") "success" else "warning"
       )
+      
     })
   })
 }
