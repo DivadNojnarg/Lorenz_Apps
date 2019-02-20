@@ -1,6 +1,7 @@
 # Server code
 server <- function(input, output, session) {
   
+  # check whether we are on mobile or desktop/laptop
   isMobile <- reactive(input$isMobile)
   
   solver_params <- callModule(module = solverInputs, id = "solver_inputs")
@@ -19,6 +20,7 @@ server <- function(input, output, session) {
   )
   
   callModule(module = aboutLorenz, id = "about")
+  callModule(module = helpLorenz, id = "help")
   
   #-------------------------------------------------------------------------
   #

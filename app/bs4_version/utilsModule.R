@@ -4,24 +4,27 @@ utilsUi <- function(id) {
     tagList(
       actionBttn(
         icon = icon("floppy"), 
-        inputId = "save", 
+        inputId = ns("save"), 
         label = " Save", 
         color = "primary", 
-        style = "fill"
+        style = "simple",
+        size = "xs"
       ),
       actionBttn(
         icon = icon("refresh"), 
-        inputId = "load", 
+        inputId = ns("load"), 
         label = " Load", 
         color = "primary", 
-        style = "fill"
+        style = "simple",
+        size = "xs"
       ),
       actionBttn(
         icon = icon("trash"), 
-        inputId = "resetAll", 
+        inputId = ns("resetAll"), 
         label = " Reset", 
         color = "danger", 
-        style = "fill"
+        style = "simple",
+        size = "xs"
       )
     ),
     # add horizontal margin between buttons

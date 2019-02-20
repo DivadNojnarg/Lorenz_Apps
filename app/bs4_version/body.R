@@ -6,6 +6,9 @@ body <- bs4DashBody(
   # load custom javascript
   includeScript(path = "www/js/find-navigator.js"),
   
+  # load custom css
+  includeCSS(path = "www/css/lorenz-app.css"),
+  
   # unleash shinyEffects
   setZoom(class = "info-box", scale = 1.02),
   # unleash shinyWidgets
@@ -17,8 +20,8 @@ body <- bs4DashBody(
       # plots
       bifurcationsUi(id = "bifurc"),
       br(),
-      computeLorenzUi(id = "compute"),
       plotLorenzUi(id = "plot"),
+      br(),
       stabilityUi(id = "stability")
     ),
     bs4TabItem(

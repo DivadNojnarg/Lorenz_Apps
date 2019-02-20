@@ -1,24 +1,20 @@
 # automate the creation of 3 identical sliders
 sliderLorenz <- function(inputId, label, value, inputIdReset) {
-  column(
-    width = 4,
-    align = "center",
-    sliderInput(
-      inputId = inputId, 
-      label = paste0("Value of ", label, ":"), 
-      min = value / 10, 
-      max = value * 2, 
-      value = value) %>%
-      shinyInput_label_embed(
-        icon("undo") %>%
-          actionBttn(
-            inputId = inputIdReset,
-            label = "", 
-            color = "danger", 
-            size = "xs"
-          )
-      )
-  )
+  sliderInput(
+    inputId = inputId, 
+    label = paste0("Value of ", label, ":"), 
+    min = value / 10, 
+    max = value * 2, 
+    value = value) %>%
+    shinyInput_label_embed(
+      icon("undo") %>%
+        actionBttn(
+          inputId = inputIdReset,
+          label = "", 
+          color = "danger", 
+          size = "xs"
+        )
+    )
 }
 
 
@@ -51,18 +47,21 @@ computeLorenzUi <- function(id) {
     icon = icon("sliders"),
     status = "primary",
     circle = FALSE,
-   
+    size = "sm",
+    tooltip = "Model Options",
+    
     # content
     # add id attrib to reset with shinyjs
     tagAppendAttributes(
       div(
         align = "center",
+        style = "height: 400px; overflow-y: scroll; overflow-x: hidden;",
         sliderLorenz(inputId = ns("a"), label = "a", value = 10, inputIdReset = ns("reset_a")),
         sliderLorenz(inputId = ns("b"), label = "b", value = 3, inputIdReset = ns("reset_b")),
         sliderLorenz(inputId = ns("c"), label = "c", value = 28, inputIdReset = ns("reset_c")),
         hr(),
-            radioLorenz(inputId = ns("xvar"), label = "X axis variable", selected = "X"),
-            radioLorenz(inputId = ns("yvar"), label = "Y axis variable", selected = "Y"),
+        radioLorenz(inputId = ns("xvar"), label = "X axis variable", selected = "X"),
+        radioLorenz(inputId = ns("yvar"), label = "Y axis variable", selected = "Y"),
         
         hr(),
         tagList(

@@ -22,6 +22,7 @@ source("dataTableModule.R")
 source("utilsModule.R")
 source("plotLorenzModule.R")
 source("aboutLorenzModule.R")
+source("helpModule.R")
 
 # Load the template components
 source("navbar.R")
