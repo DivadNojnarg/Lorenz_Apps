@@ -1,7 +1,10 @@
 body <- bs4DashBody(
+  
+  # load useful libraries
   useShinyjs(),
   withMathJax(),
   useShinyFeedback(),
+  introjsUI(),
   
   # load custom javascript
   includeScript(path = "www/js/find-navigator.js"),
@@ -12,7 +15,6 @@ body <- bs4DashBody(
   # unleash shinyEffects
   setZoom(class = "info-box", scale = 1.02),
   # unleash shinyWidgets
-  chooseSliderSkin(skin = "Flat"),
   
   bs4TabItems(
     bs4TabItem(

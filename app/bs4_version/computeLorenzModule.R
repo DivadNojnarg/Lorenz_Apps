@@ -50,8 +50,8 @@ computeLorenzUi <- function(id) {
     size = "sm",
     tooltip = "Model Options",
     
-    # content
-    # add id attrib to reset with shinyjs
+    # content: add id attrib to reset with shinyjs
+    chooseSliderSkin(skin = "Flat"),
     tagAppendAttributes(
       div(
         align = "center",
