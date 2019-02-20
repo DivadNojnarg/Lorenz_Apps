@@ -30,4 +30,13 @@ dataTableUi <- function(id) {
 dataTable <- function(input, output, session, datas) {
   # Generate the output table
   output$table <- renderDataTable(datas(), options = list(pageLength = 5))
+  
+  # download data
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste0("lorenzOutput-", Sys.Date(), ".csv")
+    },
+    content = function(file) {
+      write.csv(datas(), file)
+    })
 }

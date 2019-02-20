@@ -12,15 +12,15 @@ stabilityUi <- function(id){
 }
 
 
-stability <- function(input, output, session, model_params) {
+stability <- function(input, output, session, model_params, printInfos) {
   
   # find eauilibria
   equilibria <- reactive({
-    A <- if (model_params$c() >= 1) model_params$b() * (model_params$c() - 1) else NULL
+    A <- if (model_params()[['c']] >= 1) model_params()[['b']] * (model_params()[['c']] - 1) else NULL
     # check if sqrt makes sense from mathematical 
     # point of view
     if (!is.null(A)) A <- sqrt(A) else NULL
-    B <- model_params$c() - 1
+    B <- model_params()[['c']] - 1
     
     # return the number of eauilibria 
     # depending on A
@@ -51,20 +51,20 @@ stability <- function(input, output, session, model_params) {
         z_i <- equilibria()[[i]][3]
         
         jac <- matrix(
-          c(-model_params$a(), model_params$a(), 0,
-            model_params$c() - z_i, -1, -x_i,
-            y_i, x_i, -model_params$b() 
+          c(-model_params()[['a']], model_params()[['a']], 0,
+            model_params()[['c']] - z_i, -1, -x_i,
+            y_i, x_i, -model_params()[['b']] 
           ),
           nrow = 3,
           byrow = TRUE
         )
         
         # routh hurwitz criterion
-        a1 <- 1 + model_params$a + model_params$b
-        a2 <- model_params$a() + model_params$a() * model_params$b() + model_params$b() - 
-              model_params$a() * model_params$c() + x_i^2 + model_params$a() * z_i
-        a3 <- model_params$a() * model_params$b() * (1 - model_params$c() + z_i) + 
-              model_params$a() * x_i * (x_i + y_i)
+        a1 <- 1 + model_params()[['a']] + model_params()[['b']]
+        a2 <- model_params()[['a']] + model_params()[['a']] * model_params()[['b']] + model_params()[['b']] - 
+              model_params()[['a']] * model_params()[['c']] + x_i^2 + model_params()[['a']] * z_i
+        a3 <- model_params()[['a']] * model_params()[['b']] * (1 - model_params()[['c']] + z_i) + 
+              model_params()[['a']] * x_i * (x_i + y_i)
         
         # stability criterion
         res <- if (a1 > 0 && a1 * a2 > a3 && a3 > 0) "stable" else "unstable"
@@ -79,7 +79,7 @@ stability <- function(input, output, session, model_params) {
   lapply(1:3, FUN = function(i){
     output[[paste0("info_eq", i)]] <- renderbs4InfoBox({
       
-      req(input$print_infoboxes)
+      req(printInfos())
       
       eq <- round(equilibria()[[i]])
       jac <- stability()[[i]][[2]]

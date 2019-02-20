@@ -19,22 +19,15 @@ source("computeLorenzModule.R")
 source("bifurcationsModule.R")
 source("stabilityModule.R")
 source("dataTableModule.R")
+source("utilsModule.R")
+source("plotLorenzModule.R")
+source("aboutLorenzModule.R")
 
 # Load the template components
 source("navbar.R")
 source("sidebar.R")
 source("body.R")
 source("controlbar.R")
-
-# Define the model equations
-Lorenz <- function(t, state, parameters) {
-  with(as.list(c(state, parameters)),{
-    dX <- a * (Y - X)
-    dY <- X * (c - Z) - Y
-    dZ <- X * Y - b * Z
-    list(c(dX, dY, dZ))
-  })
-}
 
 # Compile model
 system("R CMD SHLIB Lorenz.c")

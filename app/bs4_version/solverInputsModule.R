@@ -46,10 +46,6 @@ solverInputsUi <- function(id) {
       )
     ),
     
-    # precision
-    sliderPrecision(inputId = ns("rtol"), label = "Relative Tolerance"),
-    sliderPrecision(inputId = ns("atol"), label = "Absolute Tolerance"),
-    
     # initial conditions 
     numericInput(inputId = ns("X0"), label = "Initial value of X:", value = 1, min = 0, max = 100),
     numericInput(inputId = ns("Y0"), label = "Initial value of Y:", value = 1, min = 0, max = 100),
