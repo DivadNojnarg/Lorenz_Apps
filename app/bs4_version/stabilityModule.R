@@ -86,7 +86,7 @@ stability <- function(input, output, session, model_params, printInfos) {
       req(printInfos())
       
       eq <- round(equilibria()[[i]])
-      jac <- stability()[[i]][[2]]
+      jac <- round(stability()[[i]][[2]])
       stability <- stability()[[i]][[1]]
       
       bs4InfoBox(
