@@ -1,15 +1,7 @@
 stabilityUi <- function(id){
   ns <- NS(id)
   introBox(
-    fluidRow(
-      lapply(1:3, FUN = function(i) {
-        column(
-          width = 4,
-          align = "center",
-          bs4InfoBoxOutput(ns(paste0("info_eq", i)), width = 12)
-        )
-      })
-    ),
+    uiOutput(ns("info_eq"), width = 12),
     data.step = 4,
     data.intro = help_text[4]
   )
@@ -80,18 +72,19 @@ stability <- function(input, output, session, model_params, printInfos) {
   
   
   # render info boxes for stability 
-  lapply(1:3, FUN = function(i){
-    output[[paste0("info_eq", i)]] <- renderbs4InfoBox({
-      
-      req(printInfos())
-      
-      eq <- round(equilibria()[[i]])
-      jac <- round(stability()[[i]][[2]])
-      stability <- stability()[[i]][[1]]
-      
-      bs4InfoBox(
-        title =  HTML(paste0("(", eq[1], ", ", eq[2], ", ", eq[3], ")")),
-        withMathJax(paste("$$
+  output$info_eq <- renderUI({
+    
+    req(printInfos())
+    
+    fluidRow(
+      lapply(seq_along(equilibria()), FUN = function(i){
+        eq <- round(equilibria()[[i]])
+        jac <- round(stability()[[i]][[2]])
+        stability <- stability()[[i]][[1]]
+        
+        bs4InfoBox(
+          title =  HTML(paste0("(", eq[1], ", ", eq[2], ", ", eq[3], ")")),
+          withMathJax(paste("$$
             \\begin{align}
             J^{\\ast} = 
             \\begin{pmatrix}
@@ -100,12 +93,12 @@ stability <- function(input, output, session, model_params, printInfos) {
             ", jac[7], " & ", jac[8], " & ", jac[9], "
             \\end{pmatrix}
             \\end{align}$$")),
-        value = stability,
-        icon = "question-circle",
-        width = 4,
-        status = if (stability == "stable") "success" else "warning"
-      )
-      
-    })
+          value = stability,
+          icon = "question-circle",
+          width = 4,
+          status = if (stability == "stable") "success" else "warning"
+        )
+      })
+    )
   })
 }
