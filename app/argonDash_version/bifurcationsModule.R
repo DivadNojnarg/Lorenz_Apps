@@ -37,7 +37,6 @@ bifurcations <- function(input, output, session, model_params, printInfos) {
       icon = "thumbs-up",
       shadow = TRUE,
       gradient = TRUE,
-      hover_lift = TRUE,
       background_color = if (no_hopf) "red" else "green",
       width = 12
     )
@@ -61,8 +60,7 @@ bifurcations <- function(input, output, session, model_params, printInfos) {
       icon = "thumbs-up", 
       shadow = TRUE,
       gradient = TRUE,
-      hover_lift = TRUE,
-      #background_color = "red",
+      background_color = "blue",
       width = 12
     )
     

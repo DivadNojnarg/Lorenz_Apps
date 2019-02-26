@@ -69,7 +69,7 @@ solverInputsUi <- function(id) {
           numericInput(inputId = ns("Z0"), label = "Initial value of Z:", value = 1, min = 0, max = 100)
           
         ),
-        id = "SolverParms"
+        id = "solverParms"
       ),
       data.step = 3,
       data.intro = help_text[3]

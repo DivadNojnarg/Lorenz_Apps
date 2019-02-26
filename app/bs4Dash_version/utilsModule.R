@@ -19,14 +19,6 @@ utilsUi <- function(id) {
           style = "simple",
           size = "xs"
         ),
-        actionBttn(
-          icon = icon("trash"), 
-          inputId = ns("resetAll"), 
-          label = " Reset", 
-          color = "danger", 
-          style = "simple",
-          size = "xs"
-        ),
         data.step = 6,
         data.intro = help_text[6]
       )
@@ -40,11 +32,6 @@ utilsUi <- function(id) {
 
 
 utils <- function(input, output, session) {
-  # reset all the values of the right sidebar
-  observeEvent(input$resetAll, {
-    reset("controlbar")
-    reset("lorenzParms")
-  })
   
   # save input parameters into the global values
   observeEvent(input$save, {

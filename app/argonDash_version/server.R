@@ -28,6 +28,13 @@ server <- function(input, output, session) {
   #
   #-------------------------------------------------------------------------
   
+  # reset is not included in the module
+  # shinyjs does not work in that specific case
+  observeEvent(input$resetAll, {
+    reset("solverParms")
+    reset("lorenzParms")
+  })
+  
   # deleted dlls on stop 
   session$onSessionEnded(function() {
     if (.Platform$OS.type == "unix") {
