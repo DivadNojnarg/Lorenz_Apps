@@ -20,7 +20,7 @@ bs4DashPage(
     right_text = HTML(
       paste(
         "2018,", 
-        a(href = "https://divadnojnarg.github.io/bs4Dash/index.html", "bs4Dash powered", target = "_blank")
+        a(href = "https://rinterface.github.io/bs4Dash/index.html", "bs4Dash powered", target = "_blank")
       )
     )
   )
