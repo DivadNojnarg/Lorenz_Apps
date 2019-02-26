@@ -28,13 +28,13 @@ solverInputsUi <- function(id) {
   ns <- NS(id)
   
   introBox(
-    dropdownButton(
+    dropdown(
       inputId = ns("solver_inputs_list"),
       label = "Solver Options",
       icon = icon("sliders"),
-      status = "danger",
       circle = FALSE,
-      size = "sm",
+      size = "lg",
+      up = TRUE,
       tooltip = "Solver Options",
       
       # content: add id attrib to reset with shinyjs

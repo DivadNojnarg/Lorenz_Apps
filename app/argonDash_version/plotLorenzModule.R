@@ -93,10 +93,7 @@ plotLorenz <- function(input, output, session, mobile, datas, model_params, plot
     if (mobile()) {
       
       tagList(
-        shiny::fluidRow(
-          shiny::h1(shiny::icon("area-chart"), "Outputs"),
-          solverInputsUi(id = "solver_inputs")
-        ),
+        shiny::h1(shiny::icon("area-chart"), "Outputs"),
         argonTabSet(
           id = "tabPlot",
           card_wrapper = TRUE,
@@ -136,15 +133,24 @@ plotLorenz <- function(input, output, session, mobile, datas, model_params, plot
               color = "#000000"
             )
           )
+        ),
+        fluidRow(
+          column(
+            width = 6,
+            align = "center",
+            solverInputsUi(id = "solver_inputs")
+          ),
+          column(
+            width = 6,
+            align = "center",
+            computeLorenzUi(id = "compute") 
+          )
         )
       )
     } else {
       introBox(
         argonCard(
-          title = argonRow(
-            shiny::h1(shiny::icon("area-chart"), "Outputs"),
-            solverInputsUi(id = "solver_inputs")
-          ), 
+          title = shiny::h1(shiny::icon("area-chart"), "Outputs"), 
           src = NULL, 
           hover_lift = FALSE,
           shadow = TRUE, 
@@ -182,6 +188,19 @@ plotLorenz <- function(input, output, session, mobile, datas, model_params, plot
                 type = 8, 
                 color = "#000000"
               )
+            )
+          ),
+          hr(),
+          fluidRow(
+            column(
+              width = 6,
+              align = "center",
+              solverInputsUi(id = "solver_inputs")
+            ),
+            column(
+              width = 6,
+              align = "center",
+              computeLorenzUi(id = "compute") 
             )
           )
         ),

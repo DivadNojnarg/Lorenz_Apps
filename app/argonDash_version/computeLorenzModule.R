@@ -42,13 +42,13 @@ computeLorenzUi <- function(id) {
   ns <- NS(id)
   
   introBox(
-    dropdownButton(
+    dropdown(
       inputId = ns("parms_list"),
       label = "Controls",
       icon = icon("sliders"),
-      status = "primary",
       circle = FALSE,
-      size = "sm",
+      size = "lg",
+      up = TRUE,
       tooltip = "Model Options",
       
       # content: add id attrib to reset with shinyjs

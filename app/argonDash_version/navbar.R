@@ -1,4 +1,1 @@
-navbar <- argonDashNavbar(
-  computeLorenzUi(id = "compute"),
-  utilsUi(id = "utils")
-)
+navbar <- argonDashNavbar(utilsUi(id = "utils"))
