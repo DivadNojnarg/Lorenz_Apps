@@ -2,7 +2,7 @@ header <- argonDashHeader(
   #options
   gradient = TRUE, 
   color = "default",
-  separator = TRUE, 
+  separator = FALSE, 
   separator_color = "secondary",
   bottom_padding = 4, 
   top_padding = 6, 

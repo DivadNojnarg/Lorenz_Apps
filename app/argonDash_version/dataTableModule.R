@@ -18,7 +18,7 @@ dataTableUi <- function(id) {
         background_color = NULL, 
         gradient = FALSE, 
         floating = FALSE,
-        width = 9,
+        width = 12,
         downloadButton(
           outputId = ns("downloadData"), 
           label = " Download Table"

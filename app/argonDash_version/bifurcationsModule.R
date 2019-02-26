@@ -38,7 +38,8 @@ bifurcations <- function(input, output, session, model_params, printInfos) {
       shadow = TRUE,
       gradient = TRUE,
       hover_lift = TRUE,
-      background_color = "red"
+      background_color = if (no_hopf) "red" else "green",
+      width = 12
     )
     
   })
@@ -61,7 +62,8 @@ bifurcations <- function(input, output, session, model_params, printInfos) {
       shadow = TRUE,
       gradient = TRUE,
       hover_lift = TRUE,
-      background_color = "red"
+      #background_color = "red",
+      width = 12
     )
     
   })

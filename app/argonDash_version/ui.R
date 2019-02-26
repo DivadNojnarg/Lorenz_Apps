@@ -20,7 +20,7 @@ argonDashPage(
     HTML(
       paste(
         "2018,", 
-        a(href = "https://divadnojnarg.github.io/bs4Dash/index.html", "argonDash powered", target = "_blank")
+        a(href = "https://rinterface.github.io/argonDash/index.html", "argonDash powered", target = "_blank")
       )
     )
   )

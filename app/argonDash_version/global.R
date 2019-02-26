@@ -13,7 +13,6 @@ library(shinyEffects)
 library(rintrojs)
 library(argonDash)
 library(argonR)
-library(bs4Dash)
 
 # source help text
 source("help_text.R")

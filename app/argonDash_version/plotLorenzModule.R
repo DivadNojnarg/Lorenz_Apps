@@ -98,7 +98,7 @@ plotLorenz <- function(input, output, session, mobile, datas, model_params, plot
           solverInputsUi(id = "solver_inputs")
         ),
         argonTabSet(
-          id = "tab-1",
+          id = "tabPlot",
           card_wrapper = TRUE,
           horizontal = TRUE,
           circle = FALSE,

@@ -93,9 +93,11 @@ stability <- function(input, output, session, model_params, printInfos) {
             ", jac[7], " & ", jac[8], " & ", jac[9], "
             \\end{pmatrix}
             \\end{align}$$")),
-          desciption = stability,
+          description = stability,
           icon = "question-circle",
           width = 4,
+          shadow = TRUE,
+          hover_lift = TRUE,
           background_color = if (stability == "stable") "green" else "yellow"
         )
       })
