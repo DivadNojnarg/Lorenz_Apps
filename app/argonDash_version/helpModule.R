@@ -56,7 +56,7 @@ helpLorenz <- function(input, output, session) {
   observeEvent(input$help, {
     
     runjs("$('.helpBttn').removeClass('blinking-button')")
-    runjs("$('body').addClass('control-sidebar-slide-open')")
+    runjs("$('.sw-dropdown-content').addClass('sw-show')")
     
     introjs(
       session,

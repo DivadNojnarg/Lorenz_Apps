@@ -27,19 +27,20 @@ solverInputsUi <- function(id) {
   
   ns <- NS(id)
   
-  introBox(
-    dropdown(
-      inputId = ns("solver_inputs_list"),
-      label = "Solver Options",
-      icon = icon("sliders"),
-      circle = FALSE,
-      size = "lg",
-      up = TRUE,
-      tooltip = "Solver Options",
-      
-      # content: add id attrib to reset with shinyjs
-      chooseSliderSkin(skin = "Flat"),
-      
+  
+  dropdown(
+    inputId = ns("solver_inputs_list"),
+    label = "Solver Options",
+    icon = icon("sliders"),
+    circle = FALSE,
+    size = "lg",
+    up = TRUE,
+    tooltip = "Solver Options",
+    
+    # content: add id attrib to reset with shinyjs
+    chooseSliderSkin(skin = "Flat"),
+    
+    introBox(
       tagAppendAttributes(
         div(
           align = "center",
@@ -69,10 +70,10 @@ solverInputsUi <- function(id) {
           
         ),
         id = "SolverParms"
-      )
-    ),
-    data.step = 3,
-    data.intro = help_text[3]
+      ),
+      data.step = 3,
+      data.intro = help_text[3]
+    )
   )
 }
 

@@ -41,7 +41,6 @@ computeLorenzUi <- function(id) {
   
   ns <- NS(id)
   
-  introBox(
     dropdown(
       inputId = ns("parms_list"),
       label = "Controls",
@@ -53,6 +52,8 @@ computeLorenzUi <- function(id) {
       
       # content: add id attrib to reset with shinyjs
       chooseSliderSkin(skin = "Nice"),
+      
+      introBox(
       tagAppendAttributes(
         div(
           align = "center",
@@ -80,10 +81,10 @@ computeLorenzUi <- function(id) {
           )
         ),
         id = "lorenzParms"
-      )
-    ),
-    data.step = 2,
-    data.intro = help_text[2]
+      ),
+      data.step = 2,
+      data.intro = help_text[2]
+    )
   )
   
 }
