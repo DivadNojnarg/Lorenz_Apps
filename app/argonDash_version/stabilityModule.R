@@ -12,6 +12,9 @@ stability <- function(input, output, session, model_params, printInfos) {
   
   # find eauilibria
   equilibria <- reactive({
+    
+    req(!is.null(model_params()))
+    
     A <- if (model_params()[['c']] >= 1) model_params()[['b']] * (model_params()[['c']] - 1) else NULL
     # check if sqrt makes sense from mathematical 
     # point of view
@@ -31,12 +34,9 @@ stability <- function(input, output, session, model_params, printInfos) {
     }
   })
   
-  
   # perform stability analysis
   # we need out()
   stability <- reactive({
-    
-    req(equilibria())
     
     lapply(
       seq_along(equilibria()),
@@ -69,7 +69,6 @@ stability <- function(input, output, session, model_params, printInfos) {
     )
     
   })
-  
   
   # render info boxes for stability 
   output$info_eq <- renderUI({

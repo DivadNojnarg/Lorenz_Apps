@@ -16,7 +16,7 @@ bifurcations <- function(input, output, session, model_params, printInfos) {
   # Hopf bifurcation or not? 
   output$hopf <- renderUI({
     
-    req(printInfos())
+    req(!is.null(printInfos()), !is.null(model_params()))
     
     no_hopf <- "model_params()[['c']] < model_params()[['a']] * (model_params()[['a']] + model_params()[['b']] + 3) / 
     (model_params()[['a']] - model_params()[['b']] - 1)"
@@ -46,7 +46,7 @@ bifurcations <- function(input, output, session, model_params, printInfos) {
   # pitchfork bifurcation or not?
   output$pitchfork <- renderUI({
     
-    req(printInfos())
+    req(!is.null(printInfos()), !is.null(model_params()))
     
     if (0 < model_params()[['c']] && model_params()[['c']] <= 1) {
       r2 <- paste(0, "=<", model_params()[['c']], "=<", 1, ": (0,0,0) is the only one equilibrium")

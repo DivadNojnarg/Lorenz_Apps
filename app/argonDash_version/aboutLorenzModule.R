@@ -90,43 +90,7 @@ aboutLorenzUi <- function(id) {
             \\(c > a\\frac{a+b+3}{a-b-1}\\). See more", 
           em(a("here.", href = "http://www.emba.uvm.edu/~jxyang/teaching/Math266notes13.pdf")))
       )
-    ),
-    
-    br(),
-    
-    # Edward Lorenz Profile
-    
-    shiny::h1(shiny::icon("info"), "About the author"),
-    
-    argonProfile(
-      title = "Edward Norton Lorenz",
-      subtitle = "United States",
-      src = "https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Edward_lorenz.jpg/180px-Edward_lorenz.svg",
-      url = "https://www.google.com",
-      url_1 = "https://en.wikipedia.org/wiki/Edward_Norton_Lorenz",
-      stats = argonProfileStats(
-        argonProfileStat(
-          value = 22,
-          description = "Friends"
-        ),
-        argonProfileStat(
-          value = 10,
-          description = "Photos"
-        ),
-        argonProfileStat(
-          value = 89,
-          description = "Comments"
-        )
-      ),
-      "An artist of considerable range, Ryan — 
-          the name taken by Melbourne-raised, 
-          Brooklyn-based Nick Murphy — writes, 
-          performs and records all of his own music, 
-          giving it a warm, intimate feel with a solid 
-          groove structure. An artist of considerable 
-          range."
     )
-    
   )
 }
 

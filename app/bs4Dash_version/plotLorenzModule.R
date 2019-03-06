@@ -92,7 +92,8 @@ plotLorenz <- function(input, output, session, mobile, datas, model_params, plot
     
     if (mobile()) {
       bs4TabCard(
-        elevation = 4, 
+        elevation = 4,
+        id = "tabcard1",
         width = 12,
         side = "right",
         title = tagList(tagList(shiny::icon("area-chart"), "Outputs")),
