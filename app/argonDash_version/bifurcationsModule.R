@@ -2,7 +2,8 @@ bifurcationsUi <- function(id) {
   ns <- NS(id)
   
   introBox(
-    fluidRow(
+    argonRow(
+      center = TRUE,
       uiOutput(ns("hopf"), width = 6),
       uiOutput(ns("pitchfork"), width = 6) 
     ),

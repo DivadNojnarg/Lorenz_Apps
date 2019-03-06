@@ -1,7 +1,7 @@
 navbar <- bs4DashNavbar(
   status = "white",
   skin = "light",
-  rightUi = tagList(
+  rightUi = fluidRow(
     utilsUi(id = "utils"),
     # reset is not included in the module
     # shinyjs does not work in that specific case

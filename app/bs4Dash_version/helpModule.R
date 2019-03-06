@@ -31,19 +31,21 @@ helpLorenz <- function(input, output, session) {
       newNumber <- connection() + 1
       connection(newNumber)
       
-      sendSweetAlert(
-        session = session,
-        title = "Success !!",
-        text = "Welcome on the Lorenz Model Simulator. 
+      shinyjs::delay(3000, {
+        sendSweetAlert(
+          session = session,
+          title = "Success !!",
+          text = "Welcome on the Lorenz Model Simulator. 
         The Lorenz model is a super famous attractor,
         like the Van der Pol oscillator. If it's your first time,
         go through the help section. Good exploration!",
-        html = TRUE,
-        closeOnClickOutside = FALSE,
-        type = "success"
-      )
-      
-      runjs("$('.helpBttn').addClass('blinking-button')")
+          html = TRUE,
+          closeOnClickOutside = FALSE,
+          type = "success"
+        )
+        
+        runjs("$('.helpBttn').addClass('blinking-button')")
+      })
       
     }
   })

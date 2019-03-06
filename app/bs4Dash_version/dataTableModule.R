@@ -7,6 +7,7 @@ dataTableUi <- function(id) {
       bs4Card(
         title = tagList(shiny::icon("table"), "Table"), 
         width = 9,
+        style = "overflow-x: scroll;",
         collapsible = TRUE, 
         solidHeader = TRUE, 
         downloadButton(

@@ -1,0 +1,12 @@
+name: Lorenz_Argon
+title: Lorenz_Argon
+username:
+account: divadnojnarg
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 769350
+bundleId: 1919491
+url: https://divadnojnarg.shinyapps.io/Lorenz_Argon/
+when: 1551872009.87775
+asMultiple: FALSE
+asStatic: FALSE

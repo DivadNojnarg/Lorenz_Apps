@@ -1,6 +1,8 @@
 # Define UI 
 bs4DashPage(
   old_school = FALSE,
+  enable_preloader = TRUE,
+  loading_duration = 3,
   title = "Lorenz parameters", 
   sidebar_collapsed = TRUE, 
   navbar = navbar, 

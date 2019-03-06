@@ -24,7 +24,10 @@ dataTableUi <- function(id) {
           label = " Download Table"
         ),
         withSpinner(
-          dataTableOutput(ns("table")), 
+          tagAppendAttributes(
+            dataTableOutput(ns("table")),
+            style = "overflow-x: scroll;"
+          ), 
           size = 2, 
           type = 8, 
           color = "#000000"
